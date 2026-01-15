@@ -31,16 +31,26 @@ class RegistrationFormType extends AbstractType
                     new IsTrue(message: 'Vous devez accepter les conditions d\'utilisation.'),
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+            ->add('plainPassword', \Symfony\Component\Form\Extension\Core\Type\RepeatedType::class, [
+                'type' => PasswordType::class,
                 'mapped' => false,
-                'label' => 'Mot de passe',
-                'attr' => [
-                    'autocomplete' => 'new-password',
-                    'placeholder' => '••••••••',
-                    'class' => 'form-control',
+                'first_options'  => [
+                    'label' => 'Mot de passe',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                        'placeholder' => '••••••••',
+                        'class' => 'form-control',
+                    ],
                 ],
+                'second_options' => [
+                    'label' => 'Confirmer le mot de passe',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                        'placeholder' => '••••••••',
+                        'class' => 'form-control',
+                    ],
+                ],
+                'invalid_message' => 'Les mots de passe ne correspondent pas.',
                 'constraints' => [
                     new NotBlank(message: 'Veuillez saisir un mot de passe'),
                     new Length(

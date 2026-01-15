@@ -7,15 +7,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * Contrôleur gérant l'authentification (Connexion / Déconnexion)
+ */
 class SecurityController extends AbstractController
 {
+    /**
+     * Affiche la page de connexion et gère les erreurs d'authentification
+     */
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // get the login error if there is one
+        // Récupère l'erreur de connexion si elle existe
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        // last username entered by the user
+        // Récupère le dernier nom d'utilisateur saisi (pour pré-remplir le champ)
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
@@ -24,6 +30,9 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    /**
+     * Route de déconnexion (interceptée par le firewall de Symfony)
+     */
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {

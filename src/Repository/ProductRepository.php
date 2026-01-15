@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Dépôt de l'entité Product, gérant les requêtes personnalisées liées aux produits
  * @extends ServiceEntityRepository<Product>
  */
 class ProductRepository extends ServiceEntityRepository

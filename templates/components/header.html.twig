@@ -29,6 +29,9 @@
                 {% endif %}
                 <a href="{{ path('cart_index') }}" class="cart-icon" title="Voir mon panier">
                     <i class="fas fa-shopping-cart"></i>
+                    {% if cart_count() > 0 %}
+                        <span class="cart-count">{{ cart_count() }}</span>
+                    {% endif %}
                 </a>
             </div>
         </div>

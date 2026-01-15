@@ -7,6 +7,9 @@ use App\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
+/**
+ * Fixtures pour générer un catalogue de produits de test
+ */
 class ProductFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void

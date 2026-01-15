@@ -7,6 +7,9 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * Fixtures pour générer des utilisateurs de test (Admin et Client)
+ */
 class UserFixtures extends Fixture
 {
     public function __construct(
@@ -58,4 +61,3 @@ class UserFixtures extends Fixture
         $manager->flush();
     }
 }
-

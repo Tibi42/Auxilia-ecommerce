@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\ProfileFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,33 +12,39 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * Contrôleur gérant le compte utilisateur côté client
+ */
 class ProfileController extends AbstractController
 {
+    /**
+     * Affiche et gère le profil utilisateur et le changement de mot de passe
+     */
     #[Route('/profile', name: 'app_profile')]
     public function index(
         Request $request,
         EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordHasher
     ): Response {
+        /** @var User $user */
         $user = $this->getUser();
-        
+
+        // Redirige si non connecté
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
 
-        // Formulaire de profil
+        // --- Gestion du Formulaire de Profil ---
         $profileForm = $this->createForm(ProfileFormType::class, $user);
         $profileForm->handleRequest($request);
 
         if ($profileForm->isSubmitted() && $profileForm->isValid()) {
             $entityManager->flush();
-
             $this->addFlash('success', 'Vos informations ont été mises à jour avec succès !');
-
             return $this->redirectToRoute('app_profile');
         }
 
-        // Formulaire de changement de mot de passe
+        // --- Gestion du Formulaire de Changement de Mot de Passe ---
         $passwordForm = $this->createForm(ChangePasswordFormType::class);
         $passwordForm->handleRequest($request);
 
@@ -45,11 +52,11 @@ class ProfileController extends AbstractController
             $currentPassword = $passwordForm->get('currentPassword')->getData();
             $newPassword = $passwordForm->get('newPassword')->getData();
 
-            // Vérifier le mot de passe actuel
+            // Vérification du mot de passe actuel avant modification
             if (!$passwordHasher->isPasswordValid($user, $currentPassword)) {
                 $this->addFlash('error', 'Le mot de passe actuel est incorrect.');
             } else {
-                // Hasher et sauvegarder le nouveau mot de passe
+                // Hachage et mise à jour du nouveau mot de passe
                 $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
                 $user->setPassword($hashedPassword);
                 $entityManager->flush();
@@ -66,4 +73,3 @@ class ProfileController extends AbstractController
         ]);
     }
 }
-

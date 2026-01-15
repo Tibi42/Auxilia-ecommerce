@@ -1,0 +1,167 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'utilisateur {{ user.email }} - Admin{% endblock %}
+
+{% block body %}
+    <div class="container admin-container" style="margin-top: 3rem; margin-bottom: 5rem;">
+        <div class="admin-header" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem;">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol style="list-style: none; padding: 0; display: flex; gap: 0.5rem; font-size: 0.9rem; margin-bottom: 0.5rem;">
+                        <li><a href="{{ path('app_admin_users') }}" style="color: var(--color-primary); text-decoration: none;">Utilisateurs</a></li>
+                        <li style="color: var(--color-text-light);">/</li>
+                        <li style="color: var(--color-text-light);">Modifier #{{ user.id }}</li>
+                    </ol>
+                </nav>
+                <h1 style="font-size: 2.8rem; font-weight: 800; color: var(--color-dark); margin: 0; letter-spacing: -1px;">
+                    Modifier <span style="color: var(--color-primary);">l'utilisateur</span>
+                </h1>
+            </div>
+            <a href="{{ path('app_admin_users') }}" class="btn btn-secondary" style="border-radius: 12px; padding: 0.8rem 1.5rem; display: flex; align-items: center; gap: 0.5rem; background: #f0f0f0; color: #333; border: 1px solid #ddd;">
+                <i class="fas fa-arrow-left"></i> Retour
+            </a>
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); padding: 3rem; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--color-primary), var(--color-accent));"></div>
+            
+            {{ form_start(form) }}
+                <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 4rem;">
+                    <div class="form-sections">
+                        <section style="margin-bottom: 2.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 32px; height: 32px; background: rgba(37, 99, 235, 0.1); color: var(--color-primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">1</div>
+                                Informations de compte
+                            </h3>
+                            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                <div class="custom-form-row">
+                                    {{ form_label(form.email) }}
+                                    {{ form_widget(form.email, {'attr': {'style': 'border-radius: 12px; border: 2px solid #edf2f7; padding: 1rem; width: 100%; transition: all 0.3s; font-size: 1rem;'}}) }}
+                                    {{ form_errors(form.email) }}
+                                </div>
+                                <div class="custom-form-row">
+                                    {{ form_label(form.roles) }}
+                                    <div style="display: flex; gap: 1.5rem; background: #f8fafc; padding: 1rem; border-radius: 12px; border: 2px solid #edf2f7;">
+                                        {{ form_widget(form.roles) }}
+                                    </div>
+                                    {{ form_errors(form.roles) }}
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 32px; height: 32px; background: rgba(37, 99, 235, 0.1); color: var(--color-primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">2</div>
+                                Informations personnelles
+                            </h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                <div class="custom-form-row">
+                                    {{ form_label(form.firstName) }}
+                                    {{ form_widget(form.firstName, {'attr': {'style': 'border-radius: 12px; border: 2px solid #edf2f7; padding: 1rem; width: 100%; transition: all 0.3s; font-size: 1rem;'}}) }}
+                                </div>
+                                <div class="custom-form-row">
+                                    {{ form_label(form.lastName) }}
+                                    {{ form_widget(form.lastName, {'attr': {'style': 'border-radius: 12px; border: 2px solid #edf2f7; padding: 1rem; width: 100%; transition: all 0.3s; font-size: 1rem;'}}) }}
+                                </div>
+                            </div>
+                            <div style="margin-top: 1.5rem;" class="custom-form-row">
+                                {{ form_label(form.phone) }}
+                                {{ form_widget(form.phone, {'attr': {'style': 'border-radius: 12px; border: 2px solid #edf2f7; padding: 1rem; width: 100%; transition: all 0.3s; font-size: 1rem;'}}) }}
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="address-section">
+                        <section style="background: #f8fafc; border-radius: 20px; padding: 2rem; height: 100%;">
+                            <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                                <i class="fas fa-map-marker-alt" style="color: var(--color-primary);"></i> Adresse de livraison
+                            </h3>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                <div class="custom-form-row">
+                                    {{ form_label(form.address) }}
+                                    {{ form_widget(form.address, {'attr': {'style': 'border-radius: 12px; border: 2px solid #edf2f7; padding: 1rem; width: 100%; transition: all 0.3s; font-size: 1rem;'}}) }}
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div class="custom-form-row">
+                                        {{ form_label(form.postalCode) }}
+                                        {{ form_widget(form.postalCode, {'attr': {'style': 'border-radius: 12px; border: 2px solid #edf2f7; padding: 1rem; width: 100%; transition: all 0.3s; font-size: 1rem;'}}) }}
+                                    </div>
+                                    <div class="custom-form-row">
+                                        {{ form_label(form.city) }}
+                                        {{ form_widget(form.city, {'attr': {'style': 'border-radius: 12px; border: 2px solid #edf2f7; padding: 1rem; width: 100%; transition: all 0.3s; font-size: 1rem;'}}) }}
+                                    </div>
+                                </div>
+                                <div class="custom-form-row">
+                                    {{ form_label(form.country) }}
+                                    {{ form_widget(form.country, {'attr': {'style': 'border-radius: 12px; border: 2px solid #edf2f7; padding: 1rem; width: 100%; transition: all 0.3s; font-size: 1rem;'}}) }}
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #edf2f7; display: flex; justify-content: space-between; align-items: center;">
+                    <button type="submit" class="btn" style="background: var(--color-primary); color: white; padding: 1rem 2.5rem; border-radius: 14px; font-weight: 600; font-size: 1.1rem; box-shadow: 0 10px 15px rgba(37, 99, 235, 0.2); transition: all 0.3s;">
+                        <i class="fas fa-save"></i> Enregistrer les modifications
+                    </button>
+                    
+                    {% if 'ROLE_ADMIN' not in user.roles %}
+                        <button type="button" class="btn btn-danger" onclick="if(confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.')) document.getElementById('delete-form').submit();" style="padding: 1rem 1.5rem; border-radius: 14px;">
+                            <i class="fas fa-trash"></i> Supprimer l'utilisateur
+                        </button>
+                    {% else %}
+                        <button type="button" class="btn" style="padding: 1rem 1.5rem; border-radius: 14px; background-color: #e2e8f0; color: #94a3b8; cursor: not-allowed;" title="Les administrateurs ne peuvent pas être supprimés" disabled>
+                            <i class="fas fa-lock"></i> Suppression désactivée (Admin)
+                        </button>
+                    {% endif %}
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <form id="delete-form" action="{{ path('app_admin_user_delete', {'id': user.id}) }}" method="post" style="display: none;">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+    </form>
+
+    <style>
+        .custom-form-row label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+        
+        input:focus, textarea:focus {
+            border-color: var(--color-primary) !important;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1) !important;
+            outline: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .admin-container {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-check label {
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+    </style>
+{% endblock %}

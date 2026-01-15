@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Dépôt de l'entité Order, gérant les requêtes personnalisées liées aux commandes
  * @extends ServiceEntityRepository<Order>
  */
 class OrderRepository extends ServiceEntityRepository

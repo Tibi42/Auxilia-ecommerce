@@ -139,8 +139,18 @@
                                     <td style="padding: 1rem;">{{ order.dateat|date('d/m/Y H:i') }}</td>
                                     <td style="padding: 1rem; font-weight: bold; color: var(--color-primary);">{{ order.total }} €</td>
                                     <td style="padding: 1rem;">
-                                        <span style="padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; background-color: #d1ecf1; color: #0c5460;">
-                                            {{ order.status }}
+                                        {% set status_info = {
+                                            'paid': {'label': 'Payée', 'style': 'background-color: #dcfce7; color: #166534;'},
+                                            'confirmed': {'label': 'Confirmée', 'style': 'background-color: #dcfce7; color: #166534;'},
+                                            'pending': {'label': 'En attente', 'style': 'background-color: #fef9c3; color: #854d0e;'},
+                                            'delivered': {'label': 'Livrée', 'style': 'background-color: #dbeafe; color: #1e40af;'},
+                                            'cancelled': {'label': 'Annulée', 'style': 'background-color: #fee2e2; color: #991b1b;'},
+                                            'shipped': {'label': 'Expédiée', 'style': 'background-color: #f3e8ff; color: #6b21a8;'}
+                                        } %}
+                                        {% set info = status_info[order.status|lower] ?? {'label': order.status, 'style': 'background-color: #f1f5f9; color: #475569;'} %}
+                                        <span style="padding: 0.4rem 0.8rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; {{ info.style }} display: inline-block; white-space: nowrap;">
+                                            <i class="fas fa-circle" style="font-size: 0.5rem; margin-right: 0.4rem; vertical-align: middle; opacity: 0.7;"></i>
+                                            {{ info.label }}
                                         </span>
                                     </td>
                                 </tr>

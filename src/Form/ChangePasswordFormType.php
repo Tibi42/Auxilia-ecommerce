@@ -9,8 +9,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * Formulaire de changement de mot de passe depuis le profil utilisateur
+ */
 class ChangePasswordFormType extends AbstractType
 {
+    /**
+     * Construit le formulaire avec vérification du mot de passe actuel et confirmation
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -78,4 +84,3 @@ class ChangePasswordFormType extends AbstractType
         $resolver->setDefaults([]);
     }
 }
-

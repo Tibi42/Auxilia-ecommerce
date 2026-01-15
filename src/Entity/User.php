@@ -8,58 +8,97 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Entité représentant un utilisateur/client du site
+ */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    /**
+     * Identifiant unique de l'utilisateur
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    /**
+     * Adresse email de l'utilisateur (sert d'identifiant de connexion)
+     */
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
     /**
-     * @var list<string> The user roles
+     * @var list<string> Liste des rôles de l'utilisateur (ex: ROLE_USER, ROLE_ADMIN)
      */
     #[ORM\Column]
     private array $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var string Le mot de passe haché
      */
     #[ORM\Column]
     private ?string $password = null;
 
+    /**
+     * Prénom de l'utilisateur
+     */
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstName = null;
 
+    /**
+     * Nom de famille de l'utilisateur
+     */
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
 
+    /**
+     * Numéro de téléphone
+     */
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $phone = null;
 
+    /**
+     * Adresse postale complète
+     */
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $address = null;
 
+    /**
+     * Code postal
+     */
     #[ORM\Column(length: 10, nullable: true)]
     private ?string $postalCode = null;
 
+    /**
+     * Ville
+     */
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $city = null;
 
+    /**
+     * Pays
+     */
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $country = null;
 
+    /**
+     * Token de réinitialisation du mot de passe
+     */
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $resetToken = null;
 
+    /**
+     * Date d'expiration du token de réinitialisation
+     */
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $resetTokenExpiresAt = null;
 
+    /**
+     * Contenu du panier persistant (stocké en base de données)
+     */
     #[ORM\Column(nullable: true)]
     private ?array $cart = [];
 
@@ -253,7 +292,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __serialize(): array
     {
         $data = (array) $this;
-        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
+        $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
 
         return $data;
     }

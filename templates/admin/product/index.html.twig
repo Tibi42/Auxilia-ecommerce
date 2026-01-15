@@ -7,8 +7,8 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <h1 style="font-size: 2.5rem; color: var(--color-primary);">Gestion des Produits</h1>
             <div style="display: flex; gap: 1rem;">
-                <a href="{{ path('app_admin_dashboard') }}" class="btn btn-secondary">Retour au dashboard</a>
-                <a href="{{ path('app_product') }}" class="btn btn-primary">Voir sur le site</a>
+                <a href="{{ path('app_admin_product_new') }}" class="btn btn-primary">Ajouter un produit</a>
+                <a href="{{ path('app_admin_dashboard') }}" class="btn btn-secondary">Dashboard</a>
             </div>
         </div>
 
@@ -22,6 +22,7 @@
                     <table style="width: 100%; border-collapse: collapse;">
                         <thead>
                             <tr style="border-bottom: 2px solid #e0e0e0;">
+                                <th style="padding: 1rem; text-align: left; color: var(--color-text);">Image</th>
                                 <th style="padding: 1rem; text-align: left; color: var(--color-text);">ID</th>
                                 <th style="padding: 1rem; text-align: left; color: var(--color-text);">Nom</th>
                                 <th style="padding: 1rem; text-align: left; color: var(--color-text);">Catégorie</th>
@@ -33,6 +34,15 @@
                         <tbody>
                             {% for product in products %}
                                 <tr style="border-bottom: 1px solid #e0e0e0;">
+                                    <td style="padding: 1rem;">
+                                        {% if product.imageName %}
+                                            <img src="{{ asset('uploads/products/' ~ product.imageName) }}" alt="{{ product.name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                        {% else %}
+                                            <div style="width: 50px; height: 50px; background: #f0f0f0; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-image" style="color: #ccc;"></i>
+                                            </div>
+                                        {% endif %}
+                                    </td>
                                     <td style="padding: 1rem;">#{{ product.id }}</td>
                                     <td style="padding: 1rem;">
                                         <strong>{{ product.name }}</strong>
@@ -55,8 +65,13 @@
                                         </span>
                                     </td>
                                     <td style="padding: 1rem;">
-                                        <a href="#" class="btn btn-small" style="background-color: var(--color-accent); color: white; margin-right: 0.5rem;">Modifier</a>
-                                        <a href="#" class="btn btn-small btn-danger">Supprimer</a>
+                                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                            <a href="{{ path('app_admin_product_edit', {'id': product.id}) }}" class="btn btn-small" style="background-color: var(--color-accent); color: white; display: inline-block; z-index: 1; position: relative; text-decoration: none;">Modifier</a>
+                                            <form method="post" action="{{ path('app_admin_product_delete', {'id': product.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');" style="display: inline-block; margin: 0;">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+                                                <button type="submit" class="btn btn-small btn-danger" style="display: inline-block; z-index: 1; position: relative;">Supprimer</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             {% endfor %}

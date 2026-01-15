@@ -12,8 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * Contrôleur gérant l'inscription des nouveaux utilisateurs
+ */
 class RegistrationController extends AbstractController
 {
+    /**
+     * Gère l'affichage du formulaire et le processus d'inscription
+     */
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
     {
@@ -25,14 +31,14 @@ class RegistrationController extends AbstractController
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
 
-            // encode the plain password
+            // Hachage du mot de passe en clair
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
+            // Persistance de l'utilisateur en base de données
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // do anything else you need here, like send an email
-
+            // Connexion automatique de l'utilisateur après inscription
             return $security->login($user, 'form_login', 'main');
         }
 

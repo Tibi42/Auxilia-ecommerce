@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * Formulaire de modification du profil utilisateur côté client
+ */
 class ProfileFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -136,5 +139,3 @@ class ProfileFormType extends AbstractType
         ]);
     }
 }
-
-

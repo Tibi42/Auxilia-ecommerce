@@ -6,24 +6,42 @@ use App\Repository\OrderRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Entité représentant une commande client
+ */
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
 class Order
 {
+    /**
+     * Identifiant unique de la commande
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    /**
+     * Statut de la commande (ex: pending, paid, shipped, delivered)
+     */
     #[ORM\Column(length: 32)]
     private ?string $status = null;
 
+    /**
+     * Montant total de la commande
+     */
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $total = null;
 
+    /**
+     * Date et heure à laquelle la commande a été passée
+     */
     #[ORM\Column]
     private ?\DateTime $dateat = null;
 
+    /**
+     * Utilisateur ayant passé la commande
+     */
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;

@@ -8,6 +8,9 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
+/**
+ * Fixtures pour générer des commandes de test associées aux utilisateurs
+ */
 class OrderFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
@@ -32,7 +35,7 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
                 $order->setUser($user);
                 $order->setStatus($statuses[array_rand($statuses)]);
                 $order->setTotal($totals[array_rand($totals)]);
-                
+
                 // Date aléatoire dans les 30 derniers jours
                 $date = new \DateTime();
                 $date->modify('-' . rand(0, 30) . ' days');
@@ -54,5 +57,3 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
         ];
     }
 }
-
-
