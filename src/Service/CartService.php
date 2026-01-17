@@ -204,10 +204,19 @@ class CartService
         return $this->requestStack->getSession();
     }
 
+    /**
+     * Sauvegarde le panier dans la base de données pour l'utilisateur connecté
+     * 
+     * Permet de persister le panier pour qu'il soit disponible après déconnexion.
+     * Le panier est stocké dans l'entité User pour une sauvegarde permanente.
+     * 
+     * @param array $cart Le panier à sauvegarder (tableau associatif id => quantité)
+     */
     private function saveToUser(array $cart): void
     {
         $user = $this->security->getUser();
 
+        // Sauvegarde uniquement si l'utilisateur est connecté
         if ($user instanceof User) {
             $user->setCart($cart);
             $this->entityManager->persist($user);
