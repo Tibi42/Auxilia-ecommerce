@@ -18,8 +18,8 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(ProductRepository $productRepository): Response
     {
-        // Récupère les 6 derniers produits pour la section "Produits à la une"
-        $featuredProducts = $productRepository->findBy([], ['id' => 'DESC'], 6);
+        // Récupère les 5 derniers produits pour la section "Produits à la une"
+        $featuredProducts = $productRepository->findBy([], ['id' => 'DESC'], 5);
 
         return $this->render('home/index.html.twig', [
             'featuredProducts' => $featuredProducts,

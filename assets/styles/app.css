@@ -980,6 +980,11 @@ input[type="radio"] {
         font-size: 1.75rem;
     }
 
+    /* Masquer les produits après le 3ème en vue smartphone */
+    .featured-products .products-grid > *:nth-child(n+4) {
+        display: none;
+    }
+
     /* Forms */
     .auth-form {
         margin: 0.5rem;
@@ -1065,6 +1070,11 @@ input[type="radio"] {
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.75rem;
+    }
+
+    /* Masquer les produits après le 3ème dans la section featured-products sur smartphone */
+    .featured-products .products-grid > *:nth-child(n+4) {
+        display: none;
     }
 
     .product-image {
