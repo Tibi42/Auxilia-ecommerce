@@ -6,7 +6,6 @@ use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -43,9 +42,14 @@ class ProductType extends AbstractType
                 'label' => 'Description',
                 'required' => false,
             ])
-            ->add('price', MoneyType::class, [
-                'label' => 'Prix',
-                'currency' => 'EUR',
+            ->add('price', NumberType::class, [
+                'label' => 'Prix (€)',
+                'scale' => 2,
+                'attr' => [
+                    'step' => '0.01',
+                    'min' => '0',
+                    'inputmode' => 'decimal',
+                ],
             ])
             ->add('stock', NumberType::class, [
                 'label' => 'Stock',
