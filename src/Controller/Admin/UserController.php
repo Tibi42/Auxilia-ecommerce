@@ -42,16 +42,9 @@ final class UserController extends AbstractController
             5
         );
 
-        // Récupère toutes les commandes de l'utilisateur pour la section "Commandes associées"
-        $allOrders = $entityManager->getRepository(\App\Entity\Order::class)->findBy(
-            ['user' => $user],
-            ['dateat' => 'DESC']
-        );
-
         return $this->render('admin/user/show.html.twig', [
             'user' => $user,
             'recentOrders' => $recentOrders,
-            'allOrders' => $allOrders,
         ]);
     }
 
@@ -115,78 +108,5 @@ final class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin_users');
-    }
-
-    /**
-     * Réinitialise le mot de passe d'un utilisateur
-     * Génère un nouveau mot de passe temporaire et le hash
-     */
-    #[Route('/admin/users/reset-password/{id}', name: 'app_admin_user_reset_password', methods: ['POST'])]
-    public function resetPassword(int $id, \Symfony\Component\HttpFoundation\Request $request, UserRepository $userRepository, \Doctrine\ORM\EntityManagerInterface $entityManager, \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $passwordHasher): Response
-    {
-        $user = $userRepository->find($id);
-
-        if (!$user) {
-            $this->addFlash('error', 'Utilisateur introuvable.');
-            return $this->redirectToRoute('app_admin_users');
-        }
-
-        if ($this->isCsrfTokenValid('reset-password' . $user->getId(), $request->request->get('_token'))) {
-            // Génération d'un mot de passe temporaire aléatoire
-            $temporaryPassword = bin2hex(random_bytes(8)); // Génère un mot de passe de 16 caractères
-            
-            // Hash du nouveau mot de passe
-            $hashedPassword = $passwordHasher->hashPassword($user, $temporaryPassword);
-            $user->setPassword($hashedPassword);
-            
-            $entityManager->flush();
-            
-            // Message de succès avec le mot de passe temporaire
-            $this->addFlash('success', sprintf(
-                'Le mot de passe de l\'utilisateur %s a été réinitialisé. Nouveau mot de passe temporaire : <strong>%s</strong> (À communiquer à l\'utilisateur)',
-                $user->getEmail(),
-                $temporaryPassword
-            ));
-        }
-
-        return $this->redirectToRoute('app_admin_user_show', ['id' => $id]);
-    }
-
-    /**
-     * Active ou désactive un compte utilisateur
-     * Empêche la désactivation des administrateurs et de soi-même
-     */
-    #[Route('/admin/users/toggle-active/{id}', name: 'app_admin_user_toggle_active', methods: ['POST'])]
-    public function toggleActive(int $id, \Symfony\Component\HttpFoundation\Request $request, UserRepository $userRepository, \Doctrine\ORM\EntityManagerInterface $entityManager): Response
-    {
-        $user = $userRepository->find($id);
-
-        if (!$user) {
-            $this->addFlash('error', 'Utilisateur introuvable.');
-            return $this->redirectToRoute('app_admin_users');
-        }
-
-        if ($this->isCsrfTokenValid('toggle-active' . $user->getId(), $request->request->get('_token'))) {
-            // Sécurité : Empêcher la désactivation d'un administrateur
-            if (in_array('ROLE_ADMIN', $user->getRoles()) && $user->isActive()) {
-                $this->addFlash('error', 'Les comptes administrateurs ne peuvent pas être désactivés.');
-                return $this->redirectToRoute('app_admin_user_show', ['id' => $id]);
-            }
-            
-            // Sécurité supplémentaire : Empêcher la désactivation de soi-même
-            if ($user === $this->getUser() && $user->isActive()) {
-                $this->addFlash('error', 'Vous ne pouvez pas désactiver votre propre compte.');
-                return $this->redirectToRoute('app_admin_user_show', ['id' => $id]);
-            }
-
-            // Bascule le statut du compte
-            $user->setIsActive(!$user->isActive());
-            $entityManager->flush();
-
-            $status = $user->isActive() ? 'activé' : 'désactivé';
-            $this->addFlash('success', sprintf('Le compte de %s a été %s avec succès.', $user->getEmail(), $status));
-        }
-
-        return $this->redirectToRoute('app_admin_user_show', ['id' => $id]);
     }
 }

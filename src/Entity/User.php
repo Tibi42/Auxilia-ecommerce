@@ -102,12 +102,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?array $cart = [];
 
-    /**
-     * Indique si le compte utilisateur est actif
-     */
-    #[ORM\Column(options: ['default' => true])]
-    private bool $isActive = true;
-
     public function getCart(): ?array
     {
         return $this->cart;
@@ -116,18 +110,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCart(?array $cart): static
     {
         $this->cart = $cart;
-
-        return $this;
-    }
-
-    public function isActive(): bool
-    {
-        return $this->isActive;
-    }
-
-    public function setIsActive(bool $isActive): static
-    {
-        $this->isActive = $isActive;
 
         return $this;
     }
