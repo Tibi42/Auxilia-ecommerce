@@ -48,9 +48,16 @@ final class UserController extends AbstractController
             5
         );
 
+        // Récupère toutes les commandes de l'utilisateur pour la section "Commandes associées"
+        $userOrders = $entityManager->getRepository(\App\Entity\Order::class)->findBy(
+            ['user' => $user],
+            ['dateat' => 'DESC']
+        );
+
         return $this->render('admin/user/show.html.twig', [
             'user' => $user,
             'recentOrders' => $recentOrders,
+            'userOrders' => $userOrders,
         ]);
     }
 

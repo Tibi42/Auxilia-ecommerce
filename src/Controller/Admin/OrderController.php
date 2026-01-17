@@ -52,7 +52,16 @@ final class OrderController extends AbstractController
         // Sécurité : Vérification explicite du rôle admin
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         
-        $order = $orderRepository->find($id);
+        // Charge la commande avec ses orderItems explicitement pour éviter les problèmes de lazy loading
+        $order = $orderRepository->createQueryBuilder('o')
+            ->leftJoin('o.orderItems', 'oi')
+            ->addSelect('oi')
+            ->leftJoin('o.user', 'u')
+            ->addSelect('u')
+            ->where('o.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
 
         if (!$order) {
             $this->addFlash('error', 'Commande introuvable.');

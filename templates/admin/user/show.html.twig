@@ -112,14 +112,57 @@
 				<div style="background: white; border: 1px solid #edf2f7; border-radius: 20px; padding: 2.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
 					<h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--color-dark); display: flex; align-items: center; gap: 0.75rem;">
 						<i class="fas fa-shopping-cart" style="color: var(--color-primary);"></i>
-						Commandes associées
+						Commandes associées ({{ userOrders|length }})
 					</h3>
 
 					<p style="color: #718096; margin-bottom: 2rem;">Retrouvez ici toutes les commandes passées par cet utilisateur.</p>
 
-					<div style="text-align: center; padding: 2rem;">
-						<a href="{{ path('app_admin_orders') }}" class="btn btn-primary" style="border-radius: 12px; padding: 0.8rem 1.5rem;">Consulter toutes les commandes</a>
-					</div>
+					{% if userOrders|length > 0 %}
+						<div style="overflow-x: auto;">
+							<table style="width: 100%; border-collapse: collapse;">
+								<thead>
+									<tr style="border-bottom: 2px solid #e0e0e0;">
+										<th style="padding: 0.75rem; text-align: left; color: var(--color-text); font-size: 0.9rem;">ID</th>
+										<th style="padding: 0.75rem; text-align: left; color: var(--color-text); font-size: 0.9rem;">Date</th>
+										<th style="padding: 0.75rem; text-align: left; color: var(--color-text); font-size: 0.9rem;">Total</th>
+										<th style="padding: 0.75rem; text-align: left; color: var(--color-text); font-size: 0.9rem;">Statut</th>
+										<th style="padding: 0.75rem; text-align: left; color: var(--color-text); font-size: 0.9rem;">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for order in userOrders %}
+										<tr style="border-bottom: 1px solid #e0e0e0;">
+											<td style="padding: 0.75rem; font-weight: 600;">#{{ order.id }}</td>
+											<td style="padding: 0.75rem; color: #718096; font-size: 0.9rem;">{{ order.dateat|date('d/m/Y H:i') }}</td>
+											<td style="padding: 0.75rem; font-weight: bold; color: var(--color-primary);">{{ order.total }} €</td>
+											<td style="padding: 0.75rem;">
+												{% set status_info = {
+													'paid': {'label': 'Payée', 'style': 'background-color: #dcfce7; color: #166534;'},
+													'confirmed': {'label': 'Confirmée', 'style': 'background-color: #dcfce7; color: #166534;'},
+													'pending': {'label': 'En attente', 'style': 'background-color: #fef9c3; color: #854d0e;'},
+													'delivered': {'label': 'Livrée', 'style': 'background-color: #dbeafe; color: #1e40af;'},
+													'cancelled': {'label': 'Annulée', 'style': 'background-color: #fee2e2; color: #991b1b;'},
+													'shipped': {'label': 'Expédiée', 'style': 'background-color: #f3e8ff; color: #6b21a8;'}
+												} %}
+												{% set info = status_info[order.status|lower] ?? {'label': order.status, 'style': 'background-color: #f1f5f9; color: #475569;'} %}
+												<span style="padding: 0.3rem 0.6rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; {{ info.style }} display: inline-block; white-space: nowrap;">
+													{{ info.label }}
+												</span>
+											</td>
+											<td style="padding: 0.75rem;">
+												<a href="{{ path('app_admin_order_show', {'id': order.id}) }}" class="btn btn-small" style="background-color: var(--color-accent); color: white; font-size: 0.8rem; padding: 0.4rem 0.8rem;">Voir</a>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					{% else %}
+						<div style="background: #f8fafc; border: 2px dashed #cbd5e0; border-radius: 12px; padding: 3rem; text-align: center; color: #718096;">
+							<i class="fas fa-shopping-cart" style="font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+							<p style="margin: 0;">Aucune commande pour cet utilisateur.</p>
+						</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>
