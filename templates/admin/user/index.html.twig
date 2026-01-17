@@ -1,76 +1,76 @@
+{# Administration des utilisateurs : gestion des comptes et des rôles #}
 {% extends 'base.html.twig' %}
-
-{% block title %}Gestion des Utilisateurs - Admin{% endblock %}
-
-{% block body %}
-    <div class="container" style="margin-top: 2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-            <h1 style="font-size: 2.5rem; color: var(--color-primary);">Gestion des Utilisateurs</h1>
-            <div style="display: flex; gap: 1rem;">
-                <a href="{{ path('app_admin_dashboard') }}" class="btn btn-secondary">Retour au dashboard</a>
-            </div>
-        </div>
-
-        <div style="background-color: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h2 style="font-size: 1.5rem; color: var(--color-primary); margin: 0;">Liste des utilisateurs ({{ users|length }})</h2>
-            </div>
-
-            {% if users|length > 0 %}
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="border-bottom: 2px solid #e0e0e0;">
-                                <th style="padding: 1rem; text-align: left; color: var(--color-text);">ID</th>
-                                <th style="padding: 1rem; text-align: left; color: var(--color-text);">Email</th>
-                                <th style="padding: 1rem; text-align: left; color: var(--color-text);">Rôles</th>
-                                <th style="padding: 1rem; text-align: left; color: var(--color-text);">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for user in users %}
-                                <tr style="border-bottom: 1px solid #e0e0e0;">
-                                    <td style="padding: 1rem;">#{{ user.id }}</td>
-                                    <td style="padding: 1rem;">
-                                        <a href="{{ path('app_admin_user_show', {'id': user.id}) }}" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">{{ user.email }}</a>
-                                    </td>
-                                    <td style="padding: 1rem;">
-                                        {% for role in user.roles %}
-                                            <span style="padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; 
-                                                {% if role == 'ROLE_ADMIN' %}
-                                                    background-color: #fef3c7; color: #d97706;
-                                                {% else %}
-                                                    background-color: #dbeafe; color: #1e40af;
-                                                {% endif %}">
-                                                {{ role }}
-                                            </span>
-                                        {% endfor %}
-                                    </td>
-                                    <td style="padding: 1rem;">
-                                        <div style="display: flex; gap: 0.5rem; align-items: center;">
-                                            <a href="{{ path('app_admin_user_show', {'id': user.id}) }}" class="btn btn-small" style="background-color: var(--color-accent); color: white; display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 0.75rem; font-size: 0.85rem; text-decoration: none; border-radius: 4px;">Voir</a>
-                                            <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" class="btn btn-small" style="background-color: #718096; color: white; display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 0.75rem; font-size: 0.85rem; text-decoration: none; border-radius: 4px;">Modifier</a>
-                                            
-                                            {% if 'ROLE_ADMIN' not in user.roles %}
-                                                <form method="post" action="{{ path('app_admin_user_delete', {'id': user.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');" style="display: contents;">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-                                                    <button class="btn btn-small btn-danger" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 0.75rem; font-size: 0.85rem; border: none; border-radius: 4px; cursor: pointer; background-color: var(--color-error, #dc3545); color: white;">Supprimer</button>
-                                                </form>
-                                            {% else %}
-                                                <button class="btn btn-small" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 0.75rem; font-size: 0.85rem; background-color: #e2e8f0; color: #94a3b8; cursor: not-allowed; border: none; border-radius: 4px;" title="Les administrateurs ne peuvent pas être supprimés" disabled>Supprimer</button>
-                                            {% endif %}
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            {% else %}
-                <p style="color: var(--color-text-light); text-align: center; padding: 2rem;">Aucun utilisateur</p>
-            {% endif %}
-        </div>
-    </div>
+{% block title %}
+	Gestion des Utilisateurs - Admin
 {% endblock %}
 
+{% block body %}
+	<div class="container" style="margin-top: 2rem;">
+		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+			<h1 style="font-size: 2.5rem; color: var(--color-primary);">Gestion des Utilisateurs</h1>
+			<div style="display: flex; gap: 1rem;">
+				<a href="{{ path('app_admin_dashboard') }}" class="btn btn-secondary">Retour au dashboard</a>
+			</div>
+		</div>
 
+		<div style="background-color: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 2rem;">
+			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+				<h2 style="font-size: 1.5rem; color: var(--color-primary); margin: 0;">Liste des utilisateurs ({{ users|length }})</h2>
+			</div>
+
+			{% if users|length > 0 %}
+				<div style="overflow-x: auto;">
+					<table style="width: 100%; border-collapse: collapse;">
+						<thead>
+							<tr style="border-bottom: 2px solid #e0e0e0;">
+								<th style="padding: 1rem; text-align: left; color: var(--color-text);">ID</th>
+								<th style="padding: 1rem; text-align: left; color: var(--color-text);">Email</th>
+								<th style="padding: 1rem; text-align: left; color: var(--color-text);">Rôles</th>
+								<th style="padding: 1rem; text-align: left; color: var(--color-text);">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for user in users %}
+								<tr style="border-bottom: 1px solid #e0e0e0;">
+									<td style="padding: 1rem;">#{{ user.id }}</td>
+									<td style="padding: 1rem;">
+										<a href="{{ path('app_admin_user_show', {'id': user.id}) }}" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">{{ user.email }}</a>
+									</td>
+									<td style="padding: 1rem;">
+										{% for role in user.roles %}
+											<span style="padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;
+																																							                                                {% if role == 'ROLE_ADMIN' %}
+																																							                                                    background-color: #fef3c7; color: #d97706;
+																																							                                                {% else %}
+																																							                                                    background-color: #dbeafe; color: #1e40af;
+																																							                                                {% endif %}">
+												{{ role }}
+											</span>
+										{% endfor %}
+									</td>
+									<td style="padding: 1rem;">
+										<div style="display: flex; gap: 0.5rem; align-items: center;">
+											<a href="{{ path('app_admin_user_show', {'id': user.id}) }}" class="btn btn-small" style="background-color: var(--color-accent); color: white; display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 0.75rem; font-size: 0.85rem; text-decoration: none; border-radius: 4px;">Voir</a>
+											<a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" class="btn btn-small" style="background-color: #718096; color: white; display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 0.75rem; font-size: 0.85rem; text-decoration: none; border-radius: 4px;">Modifier</a>
+
+											{% if 'ROLE_ADMIN' not in user.roles %}
+												<form method="post" action="{{ path('app_admin_user_delete', {'id': user.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');" style="display: contents;">
+													<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+													<button class="btn btn-small btn-danger" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 0.75rem; font-size: 0.85rem; border: none; border-radius: 4px; cursor: pointer; background-color: var(--color-error, #dc3545); color: white;">Supprimer</button>
+												</form>
+											{% else %}
+												<button class="btn btn-small" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 0.75rem; font-size: 0.85rem; background-color: #e2e8f0; color: #94a3b8; cursor: not-allowed; border: none; border-radius: 4px;" title="Les administrateurs ne peuvent pas être supprimés" disabled>Supprimer</button>
+											{% endif %}
+										</div>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			{% else %}
+				<p style="color: var(--color-text-light); text-align: center; padding: 2rem;">Aucun utilisateur</p>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

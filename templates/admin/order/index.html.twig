@@ -1,41 +1,44 @@
+{# Administration des commandes : consultation de la liste des commandes clients #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion des Commandes - Admin{% endblock %}
+{% block title %}Gestion des Commandes - Admin
+{% endblock %}
 
 {% block body %}
-    <div class="container" style="margin-top: 2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-            <h1 style="font-size: 2.5rem; color: var(--color-primary);">Gestion des Commandes</h1>
-            <div style="display: flex; gap: 1rem;">
-                <a href="{{ path('app_admin_dashboard') }}" class="btn btn-secondary">Retour au dashboard</a>
-            </div>
-        </div>
+	<div class="container" style="margin-top: 2rem;">
+		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+			<h1 style="font-size: 2.5rem; color: var(--color-primary);">Gestion des Commandes</h1>
+			<div style="display: flex; gap: 1rem;">
+				<a href="{{ path('app_admin_dashboard') }}" class="btn btn-secondary">Retour au dashboard</a>
+			</div>
+		</div>
 
-        <div style="background-color: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h2 style="font-size: 1.5rem; color: var(--color-primary); margin: 0;">Liste des commandes ({{ orders|length }})</h2>
-            </div>
+		<div style="background-color: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 2rem;">
+			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+				<h2 style="font-size: 1.5rem; color: var(--color-primary); margin: 0;">Liste des commandes ({{ orders|length }})</h2>
+			</div>
 
-            {% if orders|length > 0 %}
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="border-bottom: 2px solid #e0e0e0;">
-                                <th style="padding: 1rem; text-align: left; color: var(--color-text);">ID</th>
-                                <th style="padding: 1rem; text-align: left; color: var(--color-text);">Date</th>
-                                <th style="padding: 1rem; text-align: left; color: var(--color-text);">Total</th>
-                                <th style="padding: 1rem; text-align: left; color: var(--color-text);">Statut</th>
-                                <th style="padding: 1rem; text-align: left; color: var(--color-text);">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for order in orders %}
-                                <tr style="border-bottom: 1px solid #e0e0e0;">
-                                    <td style="padding: 1rem;">#{{ order.id }}</td>
-                                    <td style="padding: 1rem;">{{ order.dateat|date('d/m/Y H:i') }}</td>
-                                    <td style="padding: 1rem; font-weight: bold; color: var(--color-primary);">{{ order.total }} €</td>
-                                    <td style="padding: 1rem;">
-                                        {% set status_info = {
+			{% if orders|length > 0 %}
+				<div style="overflow-x: auto;">
+					<table style="width: 100%; border-collapse: collapse;">
+						<thead>
+							<tr style="border-bottom: 2px solid #e0e0e0;">
+								<th style="padding: 1rem; text-align: left; color: var(--color-text);">ID</th>
+								<th style="padding: 1rem; text-align: left; color: var(--color-text);">Date</th>
+								<th style="padding: 1rem; text-align: left; color: var(--color-text);">Total</th>
+								<th style="padding: 1rem; text-align: left; color: var(--color-text);">Statut</th>
+								<th style="padding: 1rem; text-align: left; color: var(--color-text);">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for order in orders %}
+								<tr style="border-bottom: 1px solid #e0e0e0;">
+									<td style="padding: 1rem;">#{{ order.id }}</td>
+									<td style="padding: 1rem;">{{ order.dateat|date('d/m/Y H:i') }}</td>
+									<td style="padding: 1rem; font-weight: bold; color: var(--color-primary);">{{ order.total }}
+										€</td>
+									<td style="padding: 1rem;">
+										{% set status_info = {
                                             'paid': {'label': 'Payée', 'style': 'background-color: #dcfce7; color: #166534;'},
                                             'confirmed': {'label': 'Confirmée', 'style': 'background-color: #dcfce7; color: #166534;'},
                                             'pending': {'label': 'En attente', 'style': 'background-color: #fef9c3; color: #854d0e;'},
@@ -43,25 +46,23 @@
                                             'cancelled': {'label': 'Annulée', 'style': 'background-color: #fee2e2; color: #991b1b;'},
                                             'shipped': {'label': 'Expédiée', 'style': 'background-color: #f3e8ff; color: #6b21a8;'}
                                         } %}
-                                        {% set info = status_info[order.status|lower] ?? {'label': order.status, 'style': 'background-color: #f1f5f9; color: #475569;'} %}
-                                        <span style="padding: 0.4rem 0.8rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; {{ info.style }} display: inline-block; white-space: nowrap;">
-                                            <i class="fas fa-circle" style="font-size: 0.5rem; margin-right: 0.4rem; vertical-align: middle; opacity: 0.7;"></i>
-                                            {{ info.label }}
-                                        </span>
-                                    </td>
-                                    <td style="padding: 1rem;">
-                                        <a href="{{ path('app_admin_order_show', {'id': order.id}) }}" class="btn btn-small" style="background-color: var(--color-accent); color: white;">Voir</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            {% else %}
-                <p style="color: var(--color-text-light); text-align: center; padding: 2rem;">Aucune commande</p>
-            {% endif %}
-        </div>
-    </div>
+										{% set info = status_info[order.status|lower] ?? {'label': order.status, 'style': 'background-color: #f1f5f9; color: #475569;'} %}
+										<span style="padding: 0.4rem 0.8rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; {{ info.style }} display: inline-block; white-space: nowrap;">
+											<i class="fas fa-circle" style="font-size: 0.5rem; margin-right: 0.4rem; vertical-align: middle; opacity: 0.7;"></i>
+											{{ info.label }}
+										</span>
+									</td>
+									<td style="padding: 1rem;">
+										<a href="{{ path('app_admin_order_show', {'id': order.id}) }}" class="btn btn-small" style="background-color: var(--color-accent); color: white;">Voir</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			{% else %}
+				<p style="color: var(--color-text-light); text-align: center; padding: 2rem;">Aucune commande</p>
+			{% endif %}
+		</div>
+	</div>
 {% endblock %}
-
-

@@ -1,3 +1,4 @@
+{# Layout de base de l'application #}
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -7,27 +8,30 @@
 			{% block title %}Auxilia E-commerce
 			{% endblock %}
 		</title>
-        <!-- Resource Hints -->
-        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-        
-        <!-- Preload Critical Assets -->
-        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
-        
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
-        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+		<!-- Resource Hints -->
+		<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+		<link
+		rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-        <link rel="stylesheet" href="{{ asset('styles/cart.css') }}">
-        <link rel="stylesheet" href="{{ asset('styles/modal.css') }}">
-		{% block stylesheets %}{% endblock %}
+		<!-- Preload Critical Assets -->
+		<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+		<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+		<link rel="stylesheet" href="{{ asset('styles/cart.css') }}">
+		<link rel="stylesheet" href="{{ asset('styles/modal.css') }}"> {% block stylesheets %}{% endblock %}
 
 		{% block javascripts %}
+			{# Importation de la map des scripts Stimulus/Turbo #}
 			{% block importmap %}
 				{{ importmap('app') }}
 			{% endblock %}
 		{% endblock %}
 	</head>
-	<body data-controller="modal">
+	<body
+		data-controller="modal">
+		{# Composant En-tête : contient le bandeau d'info, la navigation et les actions utilisateur #}
 		{% include 'components/header.html.twig' %}
 
 		<main>
@@ -42,26 +46,28 @@
 			{% block body %}{% endblock %}
 		</main>
 
+		{# Composant Pied de page : contient les liens utiles, les réseaux sociaux et le copyright #}
 		{% include 'components/footer.html.twig' %}
 
-        {# Product Modal structure #}
-        <div class="modal-overlay" data-modal-target="dialog" data-action="click->modal#closeBackground">
-            <div class="modal-dialog">
-                <div class="modal-header">
-                    <h3 class="modal-title" data-modal-target="title">Titre du produit</h3>
-                    <button class="modal-close" data-action="click->modal#close" title="Fermer">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <p data-modal-target="description">Description...</p>
-                    <div class="modal-price" data-modal-target="price">0.00 €</div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-action="click->modal#close">Fermer</button>
-                    <a href="#" class="btn btn-primary" data-modal-target="addToCartLink">
-                        <i class="fas fa-cart-plus"></i> Ajouter au panier
-                    </a>
-                </div>
-            </div>
-        </div>
+		{# Product Modal structure #}
+		<div class="modal-overlay" data-modal-target="dialog" data-action="click->modal#closeBackground">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<h3 class="modal-title" data-modal-target="title">Titre du produit</h3>
+					<button class="modal-close" data-action="click->modal#close" title="Fermer">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p data-modal-target="description">Description...</p>
+					<div class="modal-price" data-modal-target="price">0.00 €</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" data-action="click->modal#close">Fermer</button>
+					<a href="#" class="btn btn-primary" data-modal-target="addToCartLink">
+						<i class="fas fa-cart-plus"></i>
+						Ajouter au panier
+					</a>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

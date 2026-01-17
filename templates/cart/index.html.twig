@@ -1,152 +1,163 @@
+{# Vue du panier : liste les articles, permet de modifier les quantités et d'accéder au checkout #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Votre Panier - Auxilia E-commerce{% endblock %}
+{% block title %}Votre Panier - Auxilia E-commerce
+{% endblock %}
 
 {% block body %}
-<div class="container cart-container">
-    <h1>Votre Panier</h1>
+	<div class="container cart-container">
+		<h1>Votre Panier</h1>
 
-    {% if cart | length > 0 %}
-        <div class="cart-content">
-            <div class="cart-items">
-                <form id="cart-selection-form" action="{{ path('cart_delete_selection') }}" method="post">
-                    <div style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <input type="checkbox" id="select-all" style="width: 18px; height: 18px; cursor: pointer;">
-                            <label for="select-all" style="cursor: pointer; font-size: 0.9rem; font-weight: 600; color: var(--color-text);">Tout sélectionner</label>
-                        </div>
-                        <button type="submit" id="delete-selected-btn" class="btn btn-small btn-danger" style="display: none; align-items: center; gap: 0.5rem; border-radius: 8px;">
-                            <i class="fas fa-trash-alt"></i> Supprimer la sélection
-                        </button>
-                    </div>
-                    <table class="cart-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 40px;"></th>
-                            <th>Produit</th>
-                            <th class="text-center">Prix</th>
-                            <th class="text-center">Quantité</th>
-                            <th class="text-center">Total</th>
-                            <th class="text-center">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in cart %}
-                            <tr>
-                                <td style="padding-left: 0;">
-                                    <input type="checkbox" name="ids[]" value="{{ item.product.id }}" class="item-checkbox" style="width: 18px; height: 18px; cursor: pointer;">
-                                </td>
-                                <td data-label="Produit">
-                                    <div class="cart-product-info">
-                                        <div class="cart-product-image">
-                                            {% if item.product.imageName %}
-                                                <img src="{{ asset('uploads/products/' ~ item.product.imageName) }}" alt="{{ item.product.name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-                                            {% else %}
-                                                📦
-                                            {% endif %}
-                                        </div>
-                                        <div class="cart-product-details">
-                                            <h4>{{ item.product.name }}</h4>
-                                            <p>{{ item.product.category ?? 'Général' }}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td data-label="Prix">{{ item.product.price|number_format(2, ',', ' ') }} €</td>
-                                <td data-label="Quantité">
-                                    <div class="cart-quantity">
-                                        <a href="{{ path('cart_remove', {'id': item.product.id}) }}" class="btn-quantity" title="Retirer un">-</a>
-                                        <span style="min-width: 2rem; text-align: center; font-weight: 600;">{{ item.quantity }}</span>
-                                        <a href="{{ path('cart_add', {'id': item.product.id}) }}" class="btn-quantity" title="Ajouter un">+</a>
-                                    </div>
-                                </td>
-                                <td data-label="Total" style="font-weight: 600; color: var(--color-primary);">
-                                    {{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} €
-                                </td>
-                                <td data-label="Actions" class="text-center">
-                                    <a href="{{ path('cart_delete', {'id': item.product.id}) }}" class="text-danger" title="Tout supprimer" onclick="return confirm('Supprimer tous les articles de ce produit ?')">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-{% endfor %}
-                    </tbody>
-                </table>
-            </form>
-        </div>
+		{% if cart | length > 0 %}
+			<div class="cart-content">
+				<div class="cart-items">
+					<form id="cart-selection-form" action="{{ path('cart_delete_selection') }}" method="post">
+						<div style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+							<div style="display: flex; align-items: center; gap: 0.5rem;">
+								<input type="checkbox" id="select-all" style="width: 18px; height: 18px; cursor: pointer;">
+								<label for="select-all" style="cursor: pointer; font-size: 0.9rem; font-weight: 600; color: var(--color-text);">Tout sélectionner</label>
+							</div>
+							<button type="submit" id="delete-selected-btn" class="btn btn-small btn-danger" style="display: none; align-items: center; gap: 0.5rem; border-radius: 8px;">
+								<i class="fas fa-trash-alt"></i>
+								Supprimer la sélection
+							</button>
+						</div>
+						<table class="cart-table">
+							<thead>
+								<tr>
+									<th style="width: 40px;"></th>
+									<th>Produit</th>
+									<th class="text-center">Prix</th>
+									<th class="text-center">Quantité</th>
+									<th class="text-center">Total</th>
+									<th class="text-center">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for item in cart %}
+									<tr>
+										<td style="padding-left: 0;">
+											<input type="checkbox" name="ids[]" value="{{ item.product.id }}" class="item-checkbox" style="width: 18px; height: 18px; cursor: pointer;">
+										</td>
+										<td data-label="Produit">
+											<div class="cart-product-info">
+												<div class="cart-product-image">
+													{% if item.product.imageName %}
+														<img src="{{ asset('uploads/products/' ~ item.product.imageName) }}" alt="{{ item.product.name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+													{% else %}
+														📦
+													{% endif %}
+												</div>
+												<div class="cart-product-details">
+													<h4>{{ item.product.name }}</h4>
+													<p>{{ item.product.category ?? 'Général' }}</p>
+												</div>
+											</div>
+										</td>
+										<td data-label="Prix">{{ item.product.price|number_format(2, ',', ' ') }}
+											€</td>
+										<td data-label="Quantité">
+											<div class="cart-quantity">
+												<a href="{{ path('cart_remove', {'id': item.product.id}) }}" class="btn-quantity" title="Retirer un">-</a>
+												<span style="min-width: 2rem; text-align: center; font-weight: 600;">{{ item.quantity }}</span>
+												<a href="{{ path('cart_add', {'id': item.product.id}) }}" class="btn-quantity" title="Ajouter un">+</a>
+											</div>
+										</td>
+										<td data-label="Total" style="font-weight: 600; color: var(--color-primary);">
+											{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }}
+											€
+										</td>
+										<td data-label="Actions" class="text-center">
+											<a href="{{ path('cart_delete', {'id': item.product.id}) }}" class="text-danger" title="Tout supprimer" onclick="return confirm('Supprimer tous les articles de ce produit ?')">
+												<i class="fas fa-trash"></i>
+											</a>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</form>
+				</div>
 
-            <div class="cart-summary">
-                <h3>Résumé de la commande</h3>
-                <div class="cart-summary-row">
-                    <span>Sous-total</span>
-                    <span>{{ total|number_format(2, ',', ' ') }} €</span>
-                </div>
-                <div class="cart-summary-row">
-                    <span>Livraison</span>
-                    <span>Offerte</span>
-                </div>
-                <div class="cart-summary-row total">
-                    <span>Total</span>
-                    <span>{{ total|number_format(2, ',', ' ') }} €</span>
-                </div>
-                
-                <div class="cart-actions">
-                    <a href="{{ path('app_order_checkout') }}" class="btn btn-primary btn-full btn-large">
-                        <span class="btn-text">Passer la commande</span>
-                        <i class="fas fa-arrow-right btn-icon"></i>
-                    </a>
-                </div>
-                
-                <div style="margin-top: 1.5rem; text-align: center;">
-                     <a href="{{ path('app_product') }}" class="link-primary">Continuer mes achats</a>
-                </div>
-            </div>
-        </div>
-    {% else %}
-        <div class="cart-empty">
-            <div class="cart-empty-icon">
-                <i class="fas fa-shopping-cart"></i>
-            </div>
-            <h2>Votre panier est vide</h2>
-            <p style="margin: 1rem 0 2rem; color: var(--color-text-light);">Découvrez nos produits et commencez votre shopping !</p>
-            <a href="{{ path('app_product') }}" class="btn btn-primary btn-large">
-                Voir les produits
-            </a>
-        </div>
-    {% endif %}
-</div>
+				<div class="cart-summary">
+					<h3>Résumé de la commande</h3>
+					<div class="cart-summary-row">
+						<span>Sous-total</span>
+						<span>{{ total|number_format(2, ',', ' ') }}
+							€</span>
+					</div>
+					<div class="cart-summary-row">
+						<span>Livraison</span>
+						<span>Offerte</span>
+					</div>
+					<div class="cart-summary-row total">
+						<span>Total</span>
+						<span>{{ total|number_format(2, ',', ' ') }}
+							€</span>
+					</div>
 
-<script>
-(function() {
-    function initCartSelection() {
-        const selectAll = document.getElementById('select-all');
-        const checkboxes = document.querySelectorAll('.item-checkbox');
-        const deleteBtn = document.getElementById('delete-selected-btn');
+					<div class="cart-actions">
+						<a href="{{ path('app_order_checkout') }}" class="btn btn-primary btn-full btn-large">
+							<span class="btn-text">Passer la commande</span>
+							<i class="fas fa-arrow-right btn-icon"></i>
+						</a>
+					</div>
 
-        if (!selectAll || checkboxes.length === 0) return;
+					<div style="margin-top: 1.5rem; text-align: center;">
+						<a href="{{ path('app_product') }}" class="link-primary">Continuer mes achats</a>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<div class="cart-empty">
+				<div class="cart-empty-icon">
+					<i class="fas fa-shopping-cart"></i>
+				</div>
+				<h2>Votre panier est vide</h2>
+				<p style="margin: 1rem 0 2rem; color: var(--color-text-light);">Découvrez nos produits et commencez votre shopping !</p>
+				<a href="{{ path('app_product') }}" class="btn btn-primary btn-large">
+					Voir les produits
+				</a>
+			</div>
+		{% endif %}
+	</div>
 
-        function updateDeleteBtn() {
-            const checkedCount = document.querySelectorAll('.item-checkbox:checked').length;
-            if (deleteBtn) deleteBtn.style.display = checkedCount > 0 ? 'flex' : 'none';
-        }
+	<script>
+		(function () {
+function initCartSelection() {
+const selectAll = document.getElementById('select-all');
+const checkboxes = document.querySelectorAll('.item-checkbox');
+const deleteBtn = document.getElementById('delete-selected-btn');
 
-        selectAll.addEventListener('change', function() {
-            checkboxes.forEach(cb => {
-                cb.checked = selectAll.checked;
-            });
-            updateDeleteBtn();
-        });
+if (! selectAll || checkboxes.length === 0) 
+return;
 
-        checkboxes.forEach(cb => {
-            cb.addEventListener('change', function() {
-                const allChecked = document.querySelectorAll('.item-checkbox:checked').length === checkboxes.length;
-                selectAll.checked = allChecked;
-                updateDeleteBtn();
-            });
-        });
-    }
 
-    document.addEventListener('DOMContentLoaded', initCartSelection);
-    document.addEventListener('turbo:load', initCartSelection);
+function updateDeleteBtn() {
+const checkedCount = document.querySelectorAll('.item-checkbox:checked').length;
+if (deleteBtn) 
+deleteBtn.style.display = checkedCount > 0 ? 'flex' : 'none';
+
+}
+
+selectAll.addEventListener('change', function () {
+checkboxes.forEach(cb => {
+cb.checked = selectAll.checked;
+});
+updateDeleteBtn();
+});
+
+checkboxes.forEach(cb => {
+cb.addEventListener('change', function () {
+const allChecked = document.querySelectorAll('.item-checkbox:checked').length === checkboxes.length;
+selectAll.checked = allChecked;
+updateDeleteBtn();
+});
+});
+}
+
+document.addEventListener('DOMContentLoaded', initCartSelection);
+document.addEventListener('turbo:load', initCartSelection);
 })();
-</script>
+	</script>
 {% endblock %}

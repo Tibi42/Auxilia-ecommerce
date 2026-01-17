@@ -1,42 +1,39 @@
+{# Composant Carte Produit : affiche les informations résumées d'un produit (image, nom, prix, actions) #}
 <div class="product-card">
-    <div class="product-image">
-        {% if product.imageName %}
-            <img src="{{ asset('uploads/products/' ~ product.imageName) }}" alt="{{ product.name }}" loading="lazy">
-        {% else %}
-            <div class="product-placeholder">📦</div>
-        {% endif %}
-    </div>
-    
-    <div class="product-info">
-        <h3 class="product-name">{{ product.name }}</h3>
-        {% if product.description %}
-            <p class="product-description">{{ product.description|slice(0, 100) }}{% if product.description|length > 100 %}...{% endif %}</p>
-        {% endif %}
-        
-        <div class="product-price">
-            <span class="price">{{ product.price }} €</span>
-        </div>
-        
-        <div style="margin-top: 1rem;">
-            <span style="color: var(--color-text-light); font-size: 0.9rem;">Stock: {{ product.stock ?? 'N/A' }}</span>
-        </div>
-        
-        <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-            <a href="{{ path('app_product') }}" 
-               class="btn btn-primary" 
-               style="flex: 1; text-align: center;"
-               data-action="click->modal#open"
-               data-name="{{ product.name }}"
-               data-description="{{ product.description }}"
-               data-price="{{ product.price }}"
-               data-add-to-cart-url="{{ path('cart_add', {id: product.id}) }}"
-            >
-               Voir
-            </a>
-            <a href="{{ path('cart_add', {id: product.id}) }}" class="btn btn-secondary" style="flex: 0 0 auto;" title="Ajouter au panier">
-                <i class="fas fa-cart-plus"></i>
-            </a>
-        </div>
-    </div>
-</div>
+	<div class="product-image">
+		{% if product.imageName %}
+			<img src="{{ asset('uploads/products/' ~ product.imageName) }}" alt="{{ product.name }}" loading="lazy">
+		{% else %}
+			<div class="product-placeholder">📦</div>
+		{% endif %}
+	</div>
 
+	<div class="product-info">
+		<h3 class="product-name">{{ product.name }}</h3>
+		{% if product.description %}
+			<p class="product-description">{{ product.description|slice(0, 100) }}
+				{% if product.description|length > 100 %}...
+				{% endif %}
+			</p>
+		{% endif %}
+
+		<div class="product-price">
+			<span class="price">{{ product.price }}
+				€</span>
+		</div>
+
+		<div style="margin-top: 1rem;">
+			<span style="color: var(--color-text-light); font-size: 0.9rem;">Stock:
+				{{ product.stock ?? 'N/A' }}</span>
+		</div>
+
+		<div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+			<a href="{{ path('app_product') }}" class="btn btn-primary" style="flex: 1; text-align: center;" data-action="click->modal#open" data-name="{{ product.name }}" data-description="{{ product.description }}" data-price="{{ product.price }}" data-add-to-cart-url="{{ path('cart_add', {id: product.id}) }}">
+				Voir
+			</a>
+			<a href="{{ path('cart_add', {id: product.id}) }}" class="btn btn-secondary" style="flex: 0 0 auto;" title="Ajouter au panier">
+				<i class="fas fa-cart-plus"></i>
+			</a>
+		</div>
+	</div>
+</div>

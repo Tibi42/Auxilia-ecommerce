@@ -1,6 +1,7 @@
+{# Page d'accueil : présente le héros carousel, l'introduction et les produits en vedette #}
 {% extends 'base.html.twig' %}
-
-{% block title %}Accueil - Auxilia E-commerce
+{% block title %}
+	Accueil - Auxilia E-commerce
 {% endblock %}
 
 {% block body %}
@@ -65,7 +66,7 @@
 			<div class="about-content">
 				<h2>Notre engagement</h2>
 				<p>Chez Auxilia E-commerce, nous nous engageons à vous offrir une expérience d'achat exceptionnelle. Nous sélectionnons soigneusement chaque produit pour garantir qualité et satisfaction. Notre équipe est à votre disposition pour répondre à toutes vos questions et vous accompagner dans vos achats.</p>
-                <a href="{{ path('app_about') }}" class="btn btn-secondary">En savoir plus</a>
+				<a href="{{ path('app_about') }}" class="btn btn-secondary">En savoir plus</a>
 			</div>
 		</div>
 	</section>
