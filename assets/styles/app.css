@@ -890,6 +890,9 @@ input[type="radio"] {
         gap: 0.5rem;
         align-items: center;
         flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 0.5rem;
     }
 
     .search-form {
@@ -897,6 +900,22 @@ input[type="radio"] {
         width: 100%;
         margin-right: 0 !important;
         margin-bottom: 0.5rem;
+    }
+
+    /* Connexion et éléments connexes à gauche */
+    .header-actions > .login-link,
+    .header-actions > .logout-link,
+    .header-actions > .account-icon {
+        order: 1;
+        flex-shrink: 0;
+    }
+
+    /* Panier à droite - pousse tout vers la gauche */
+    .header-actions > .cart-icon {
+        order: 2;
+        margin-left: auto !important;
+        font-size: 1.3rem;
+        flex-shrink: 0;
     }
 
     .login-link, .logout-link {
