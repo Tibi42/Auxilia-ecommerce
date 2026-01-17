@@ -83,18 +83,19 @@
 							Image du produit
 						</h3>
 
-						<div style="margin-bottom: 2rem; position: relative; aspect-ratio: 1; border-radius: 16px; overflow: hidden; border: 2px dashed #cbd5e0; display: flex; align-items: center; justify-content: center; background: white;">
-							<div style="text-align: center; color: #a0aec0;">
-								<i class="fas fa-cloud-upload-alt" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-								<p style="font-size: 0.9rem;">Uploader une image</p>
-							</div>
+					<div id="image-preview-container" style="margin-bottom: 2rem; position: relative; aspect-ratio: 1; border-radius: 16px; overflow: hidden; border: 2px dashed #cbd5e0; display: flex; align-items: center; justify-content: center; background: white;">
+						<div id="image-placeholder" style="text-align: center; color: #a0aec0;">
+							<i class="fas fa-cloud-upload-alt" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+							<p style="font-size: 0.9rem;">Uploader une image</p>
 						</div>
+						<img id="image-preview" src="" alt="Aperçu" style="display: none; width: 100%; height: 100%; object-fit: cover;">
+					</div>
 
-						<div class="upload-control">
-							{{ form_label(form.image, 'Choisir une image', {'label_attr': {'style': 'font-weight: 600; color: var(--color-dark); margin-bottom: 0.5rem; display: block;'}}) }}
-							<div class="file-input-wrapper">
-								{{ form_widget(form.image, {'attr': {'class': 'custom-file-input'}}) }}
-							</div>
+					<div class="upload-control">
+						{{ form_label(form.image, 'Choisir une image', {'label_attr': {'style': 'font-weight: 600; color: var(--color-dark); margin-bottom: 0.5rem; display: block;'}}) }}
+						<div class="file-input-wrapper">
+							{{ form_widget(form.image, {'attr': {'class': 'custom-file-input', 'id': 'product-image-input', 'accept': 'image/jpeg,image/png,image/webp'}}) }}
+						</div>
 							<p style="font-size: 0.8rem; color: #718096; margin-top: 0.5rem;">
 								Format recommandé : 1000x1000px, PNG ou JPG.
 							</p>
@@ -155,4 +156,57 @@
 			}
 		}
 	</style>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			// Trouver le champ input file (par ID ou par type)
+			const imageInput = document.getElementById('product-image-input') || 
+			                   document.querySelector('input[type="file"][name*="image"]');
+			const imagePreview = document.getElementById('image-preview');
+			const imagePlaceholder = document.getElementById('image-placeholder');
+			const imageContainer = document.getElementById('image-preview-container');
+
+			if (imageInput && imagePreview && imageContainer) {
+				imageInput.addEventListener('change', function(e) {
+					const file = e.target.files[0];
+					
+					if (file) {
+						// Vérifier que c'est une image
+						if (!file.type.match('image.*')) {
+							alert('Veuillez sélectionner un fichier image valide.');
+							imageInput.value = '';
+							return;
+						}
+
+						// Créer un FileReader pour lire le fichier
+						const reader = new FileReader();
+						
+						reader.onload = function(e) {
+							// Afficher l'image prévisualisée
+							imagePreview.src = e.target.result;
+							imagePreview.style.display = 'block';
+							if (imagePlaceholder) {
+								imagePlaceholder.style.display = 'none';
+							}
+							imageContainer.style.border = '2px solid var(--color-primary)';
+						};
+						
+						reader.onerror = function() {
+							alert('Erreur lors de la lecture du fichier.');
+							imageInput.value = '';
+						};
+						
+						reader.readAsDataURL(file);
+					} else {
+						// Si aucun fichier n'est sélectionné, réinitialiser
+						imagePreview.style.display = 'none';
+						if (imagePlaceholder) {
+							imagePlaceholder.style.display = 'block';
+						}
+						imageContainer.style.border = '2px dashed #cbd5e0';
+					}
+				});
+			}
+		});
+	</script>
 {% endblock %}
