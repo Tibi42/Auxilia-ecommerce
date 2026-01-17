@@ -27,7 +27,7 @@
 				{{ product.stock ?? 'N/A' }}</span>
 		</div>
 
-		<div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+		<div class="product-actions" style="margin-top: auto; padding-top: 1rem; display: flex; gap: 0.5rem;">
 			<a href="{{ path('app_product') }}" class="btn btn-primary" style="flex: 1; text-align: center;" data-action="click->modal#open" data-name="{{ product.name }}" data-description="{{ product.description }}" data-price="{{ product.price }}" data-add-to-cart-url="{{ path('cart_add', {id: product.id}) }}">
 				Voir
 			</a>

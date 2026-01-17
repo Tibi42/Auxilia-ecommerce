@@ -325,6 +325,9 @@ body {
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     position: relative;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .product-card:hover {
@@ -387,6 +390,20 @@ body {
 
 .product-info {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-name,
+.product-description,
+.product-price {
+    flex-shrink: 0;
+}
+
+.product-actions {
+    margin-top: auto !important;
+    padding-top: 1rem !important;
 }
 
 .product-name {
