@@ -14,8 +14,22 @@
 		</div>
 
 		<div style="background-color: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 2rem;">
-			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
 				<h2 style="font-size: 1.5rem; color: var(--color-primary); margin: 0;">Liste des commandes ({{ orders|length }})</h2>
+				
+				{# Filtre par statut #}
+				<div style="display: flex; align-items: center; gap: 0.5rem;">
+					<label for="statusFilter" style="color: var(--color-text); font-weight: 500; white-space: nowrap;">Filtrer par statut :</label>
+					<select id="statusFilter" 
+					        onchange="window.location.href='{{ path('app_admin_orders') }}?status=' + this.value;"
+					        style="padding: 0.5rem 1rem; border: 1px solid #e0e0e0; border-radius: 8px; background-color: white; color: var(--color-text); cursor: pointer; font-size: 0.95rem;">
+						{% for statusKey, statusLabel in availableStatuses %}
+							<option value="{{ statusKey }}" {% if currentStatus == statusKey %}selected{% endif %}>
+								{{ statusLabel }}
+							</option>
+						{% endfor %}
+					</select>
+				</div>
 			</div>
 
 			{% if orders|length > 0 %}

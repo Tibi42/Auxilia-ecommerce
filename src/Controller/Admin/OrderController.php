@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -12,16 +13,40 @@ final class OrderController extends AbstractController
     /**
      * Liste toutes les commandes de la boutique pour l'administration
      * 
+     * @param Request $request La requête HTTP pour récupérer le filtre de statut
      * @param OrderRepository $orderRepository Le repository pour récupérer toutes les commandes
      * @return Response Une instance de Response vers la liste des commandes admin
      */
     #[Route('/admin/orders', name: 'app_admin_orders')]
-    public function index(OrderRepository $orderRepository): Response
+    public function index(Request $request, OrderRepository $orderRepository): Response
     {
-        $orders = $orderRepository->findBy([], ['id' => 'DESC']);
+        // Récupération du filtre de statut depuis la requête
+        $statusFilter = $request->query->get('status');
+        
+        // Définition des critères de recherche
+        $criteria = [];
+        if ($statusFilter && $statusFilter !== 'all') {
+            $criteria['status'] = $statusFilter;
+        }
+        
+        // Récupération des commandes filtrées
+        $orders = $orderRepository->findBy($criteria, ['id' => 'DESC']);
+        
+        // Liste des statuts disponibles
+        $availableStatuses = [
+            'all' => 'Tous les statuts',
+            'paid' => 'Payée',
+            'confirmed' => 'Confirmée',
+            'pending' => 'En attente',
+            'delivered' => 'Livrée',
+            'cancelled' => 'Annulée',
+            'shipped' => 'Expédiée'
+        ];
 
         return $this->render('admin/order/index.html.twig', [
             'orders' => $orders,
+            'currentStatus' => $statusFilter ?? 'all',
+            'availableStatuses' => $availableStatuses,
         ]);
     }
 
