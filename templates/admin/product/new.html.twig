@@ -183,15 +183,25 @@
 				if (!file) return false;
 
 				// Vérifier que c'est une image
-				if (!file.type.match('image.*')) {
-					alert('Veuillez sélectionner un fichier image valide.');
+				const validImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+				if (!validImageTypes.includes(file.type) && !file.type.startsWith('image/')) {
+					alert('Veuillez sélectionner un fichier image valide (JPG, PNG, WEBP).');
 					return false;
 				}
 
-				// Mettre à jour le champ input file
-				const dataTransfer = new DataTransfer();
-				dataTransfer.items.add(file);
-				imageInput.files = dataTransfer.files;
+				// Mettre à jour le champ input file avec DataTransfer
+				// DataTransfer est supporté dans tous les navigateurs modernes
+				try {
+					const dataTransfer = new DataTransfer();
+					dataTransfer.items.add(file);
+					imageInput.files = dataTransfer.files;
+					
+					// Déclencher l'événement change pour s'assurer que le formulaire détecte le changement
+					const changeEvent = new Event('change', { bubbles: true });
+					imageInput.dispatchEvent(changeEvent);
+				} catch (e) {
+					console.warn('DataTransfer non supporté, le fichier sera prévisualisé mais devra être sélectionné via le bouton Parcourir');
+				}
 
 				// Créer un FileReader pour lire le fichier
 				const reader = new FileReader();
@@ -261,8 +271,22 @@
 					const dt = e.dataTransfer;
 					const files = dt.files;
 					
-					if (files.length > 0) {
+					if (files && files.length > 0) {
 						handleImageFile(files[0]);
+					} else {
+						// Gérer les items si files n'est pas disponible
+						const items = dt.items;
+						if (items && items.length > 0) {
+							for (let i = 0; i < items.length; i++) {
+								if (items[i].kind === 'file') {
+									const file = items[i].getAsFile();
+									if (file) {
+										handleImageFile(file);
+										break;
+									}
+								}
+							}
+						}
 					}
 				}, false);
 
