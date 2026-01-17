@@ -1,117 +1,117 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}À propos - Auxilia E-commerce{% endblock %}
-
-{% block body %}
-    <div class="container">
-        <section class="page-header" style="text-align: center; padding: 4rem 0 2rem;">
-            <h1 style="font-size: 3rem; color: var(--color-primary); margin-bottom: 1rem;">À propos de nous</h1>
-            <p style="font-size: 1.25rem; color: var(--color-text-light); max-width: 800px; margin: 0 auto;">
-                Découvrez l'histoire et les valeurs qui nous animent
-            </p>
-        </section>
-
-        <section class="page-content" style="margin: 3rem 0;">
-            <div style="max-width: 900px; margin: 0 auto;">
-                <div style="margin-bottom: 3rem;">
-                    <h2 style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1.5rem;">Notre histoire</h2>
-                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--color-text); margin-bottom: 1.5rem;">
-                        Auxilia E-commerce est née d'une passion pour offrir à nos clients une expérience d'achat en ligne exceptionnelle. Fondée en 2020, notre entreprise s'est rapidement imposée comme une référence dans le domaine du e-commerce grâce à notre engagement envers la qualité, la satisfaction client et l'innovation.
-                    </p>
-                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--color-text); margin-bottom: 1.5rem;">
-                        Nous croyons que chaque client mérite le meilleur, c'est pourquoi nous sélectionnons soigneusement chaque produit de notre catalogue. Notre équipe travaille sans relâche pour vous proposer une large gamme de produits de qualité dans différentes catégories : électronique, vêtements, maison, sport et bien plus encore.
-                    </p>
-                </div>
-
-                <div style="margin-bottom: 3rem;">
-                    <h2 style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1.5rem;">Nos valeurs</h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                        <div style="background-color: var(--color-light); padding: 2rem; border-radius: 8px;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
-                            <h3 style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 1rem;">Qualité</h3>
-                            <p style="color: var(--color-text-light); line-height: 1.6;">
-                                Nous sélectionnons uniquement des produits de la plus haute qualité pour garantir votre satisfaction.
-                            </p>
-                        </div>
-                        <div style="background-color: var(--color-light); padding: 2rem; border-radius: 8px;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">🤝</div>
-                            <h3 style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 1rem;">Service client</h3>
-                            <p style="color: var(--color-text-light); line-height: 1.6;">
-                                Notre équipe est toujours disponible pour répondre à vos questions et vous accompagner.
-                            </p>
-                        </div>
-                        <div style="background-color: var(--color-light); padding: 2rem; border-radius: 8px;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
-                            <h3 style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 1rem;">Innovation</h3>
-                            <p style="color: var(--color-text-light); line-height: 1.6;">
-                                Nous innovons constamment pour améliorer votre expérience d'achat en ligne.
-                            </p>
-                        </div>
-                        <div style="background-color: var(--color-light); padding: 2rem; border-radius: 8px;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">💚</div>
-                            <h3 style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 1rem;">Durabilité</h3>
-                            <p style="color: var(--color-text-light); line-height: 1.6;">
-                                Nous nous engageons pour un commerce responsable et respectueux de l'environnement.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 3rem;">
-                    <h2 style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1.5rem;">Notre mission</h2>
-                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--color-text); margin-bottom: 1.5rem;">
-                        Notre mission est de rendre le shopping en ligne simple, agréable et accessible à tous. Nous nous efforçons de créer une plateforme où vous pouvez trouver exactement ce que vous cherchez, au meilleur prix, avec un service client irréprochable.
-                    </p>
-                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--color-text); margin-bottom: 1.5rem;">
-                        Nous croyons que le e-commerce ne doit pas être seulement une transaction, mais une expérience complète qui vous fait revenir. C'est pourquoi nous investissons continuellement dans l'amélioration de notre site, l'élargissement de notre catalogue et le perfectionnement de nos services.
-                    </p>
-                </div>
-
-                <div style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%); padding: 3rem; border-radius: 16px; color: white; text-align: center; margin: 3rem 0;">
-                    <h2 style="font-size: 2rem; margin-bottom: 1rem;">Rejoignez-nous</h2>
-                    <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">
-                        Découvrez notre sélection de produits et profitez d'une expérience d'achat exceptionnelle
-                    </p>
-                    <a href="{{ path('app_product') }}" class="btn btn-secondary btn-large" style="background-color: white; color: var(--color-primary);">
-                        Découvrir nos produits
-                    </a>
-                </div>
-
-                <div style="margin-bottom: 3rem;">
-                    <h2 style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1.5rem;">Nos engagements</h2>
-                    <ul style="list-style: none; padding: 0; margin: 0;">
-                        <li style="padding: 1rem 0; border-bottom: 1px solid #e0e0e0; display: flex; align-items: start; gap: 1rem;">
-                            <span style="font-size: 1.5rem;">📦</span>
-                            <div>
-                                <h3 style="font-size: 1.25rem; color: var(--color-text); margin-bottom: 0.5rem;">Livraison rapide et sécurisée</h3>
-                                <p style="color: var(--color-text-light); margin: 0;">Livraison gratuite à partir de 50€ d'achat, avec suivi en temps réel de votre commande.</p>
-                            </div>
-                        </li>
-                        <li style="padding: 1rem 0; border-bottom: 1px solid #e0e0e0; display: flex; align-items: start; gap: 1rem;">
-                            <span style="font-size: 1.5rem;">💳</span>
-                            <div>
-                                <h3 style="font-size: 1.25rem; color: var(--color-text); margin-bottom: 0.5rem;">Paiement sécurisé</h3>
-                                <p style="color: var(--color-text-light); margin: 0;">Tous vos paiements sont protégés par les dernières technologies de sécurité.</p>
-                            </div>
-                        </li>
-                        <li style="padding: 1rem 0; border-bottom: 1px solid #e0e0e0; display: flex; align-items: start; gap: 1rem;">
-                            <span style="font-size: 1.5rem;">↩️</span>
-                            <div>
-                                <h3 style="font-size: 1.25rem; color: var(--color-text); margin-bottom: 0.5rem;">Retours faciles</h3>
-                                <p style="color: var(--color-text-light); margin: 0;">Vous avez 30 jours pour retourner un article si vous n'êtes pas satisfait.</p>
-                            </div>
-                        </li>
-                        <li style="padding: 1rem 0; display: flex; align-items: start; gap: 1rem;">
-                            <span style="font-size: 1.5rem;">🎁</span>
-                            <div>
-                                <h3 style="font-size: 1.25rem; color: var(--color-text); margin-bottom: 0.5rem;">Offres exclusives</h3>
-                                <p style="color: var(--color-text-light); margin: 0;">Profitez d'offres spéciales et de promotions réservées à nos membres.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </div>
+{% block title %}À propos - Auxilia E-commerce
 {% endblock %}
 
+{% block body %}
+	<div class="container">
+		<section class="page-header" style="text-align: center; padding: 4rem 0 2rem;">
+			<h1 style="font-size: 3rem; color: var(--color-primary); margin-bottom: 1rem;">À propos de nous</h1>
+			<p style="font-size: 1.25rem; color: var(--color-text-light); max-width: 800px; margin: 0 auto;">
+				Découvrez l'histoire et les valeurs qui nous animent
+			</p>
+		</section>
+
+		<section class="page-content" style="margin: 3rem 0;">
+			<div style="max-width: 900px; margin: 0 auto;">
+				<div style="margin-bottom: 3rem;">
+					<h2 style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1.5rem;">Notre histoire</h2>
+					<p style="font-size: 1.1rem; line-height: 1.8; color: var(--color-text); margin-bottom: 1.5rem;">
+						Auxilia E-commerce est née d'une passion pour offrir à nos clients une expérience d'achat en ligne exceptionnelle. Fondée en 2020, notre entreprise s'est rapidement imposée comme une référence dans le domaine du e-commerce grâce à notre engagement envers la qualité, la satisfaction client et l'innovation.
+					</p>
+					<p style="font-size: 1.1rem; line-height: 1.8; color: var(--color-text); margin-bottom: 1.5rem;">
+						Nous croyons que chaque client mérite le meilleur, c'est pourquoi nous sélectionnons soigneusement chaque produit de notre catalogue. Notre équipe travaille sans relâche pour vous proposer une large gamme de produits de qualité dans différentes catégories : électronique, vêtements, maison, sport et bien plus encore.
+					</p>
+				</div>
+
+				<div style="margin-bottom: 3rem;">
+					<h2 style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1.5rem;">Nos valeurs</h2>
+					<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+						<div style="background-color: var(--color-light); padding: 2rem; border-radius: 8px;">
+							<div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
+							<h3 style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 1rem;">Qualité</h3>
+							<p style="color: var(--color-text-light); line-height: 1.6;">
+								Nous sélectionnons uniquement des produits de la plus haute qualité pour garantir votre satisfaction.
+							</p>
+						</div>
+						<div style="background-color: var(--color-light); padding: 2rem; border-radius: 8px;">
+							<div style="font-size: 3rem; margin-bottom: 1rem;">🤝</div>
+							<h3 style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 1rem;">Service client</h3>
+							<p style="color: var(--color-text-light); line-height: 1.6;">
+								Notre équipe est toujours disponible pour répondre à vos questions et vous accompagner.
+							</p>
+						</div>
+						<div style="background-color: var(--color-light); padding: 2rem; border-radius: 8px;">
+							<div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
+							<h3 style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 1rem;">Innovation</h3>
+							<p style="color: var(--color-text-light); line-height: 1.6;">
+								Nous innovons constamment pour améliorer votre expérience d'achat en ligne.
+							</p>
+						</div>
+						<div style="background-color: var(--color-light); padding: 2rem; border-radius: 8px;">
+							<div style="font-size: 3rem; margin-bottom: 1rem;">💚</div>
+							<h3 style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 1rem;">Durabilité</h3>
+							<p style="color: var(--color-text-light); line-height: 1.6;">
+								Nous nous engageons pour un commerce responsable et respectueux de l'environnement.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 3rem;">
+					<h2 style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1.5rem;">Notre mission</h2>
+					<p style="font-size: 1.1rem; line-height: 1.8; color: var(--color-text); margin-bottom: 1.5rem;">
+						Notre mission est de rendre le shopping en ligne simple, agréable et accessible à tous. Nous nous efforçons de créer une plateforme où vous pouvez trouver exactement ce que vous cherchez, au meilleur prix, avec un service client irréprochable.
+					</p>
+					<p style="font-size: 1.1rem; line-height: 1.8; color: var(--color-text); margin-bottom: 1.5rem;">
+						Nous croyons que le e-commerce ne doit pas être seulement une transaction, mais une expérience complète qui vous fait revenir. C'est pourquoi nous investissons continuellement dans l'amélioration de notre site, l'élargissement de notre catalogue et le perfectionnement de nos services.
+					</p>
+				</div>
+
+				<div style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%); padding: 3rem; border-radius: 16px; color: white; text-align: center; margin: 3rem 0;">
+					<h2 style="font-size: 2rem; margin-bottom: 1rem;">Rejoignez-nous</h2>
+					<p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">
+						Découvrez notre sélection de produits et profitez d'une expérience d'achat exceptionnelle
+					</p>
+					<a href="{{ path('app_product') }}" class="btn btn-secondary btn-large" style="background-color: white; color: var(--color-primary);">
+						Découvrir nos produits
+					</a>
+				</div>
+
+				<div style="margin-bottom: 3rem;">
+					<h2 style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1.5rem;">Nos engagements</h2>
+					<ul style="list-style: none; padding: 0; margin: 0;">
+						<li style="padding: 1rem 0; border-bottom: 1px solid #e0e0e0; display: flex; align-items: start; gap: 1rem;">
+							<span style="font-size: 1.5rem;">📦</span>
+							<div>
+								<h3 style="font-size: 1.25rem; color: var(--color-text); margin-bottom: 0.5rem;">Livraison rapide et sécurisée</h3>
+								<p style="color: var(--color-text-light); margin: 0;">Livraison gratuite à partir de 50€ d'achat, avec suivi en temps réel de votre commande.</p>
+							</div>
+						</li>
+						<li style="padding: 1rem 0; border-bottom: 1px solid #e0e0e0; display: flex; align-items: start; gap: 1rem;">
+							<span style="font-size: 1.5rem;">💳</span>
+							<div>
+								<h3 style="font-size: 1.25rem; color: var(--color-text); margin-bottom: 0.5rem;">Paiement sécurisé</h3>
+								<p style="color: var(--color-text-light); margin: 0;">Tous vos paiements sont protégés par les dernières technologies de sécurité.</p>
+							</div>
+						</li>
+						<li style="padding: 1rem 0; border-bottom: 1px solid #e0e0e0; display: flex; align-items: start; gap: 1rem;">
+							<span style="font-size: 1.5rem;">↩️</span>
+							<div>
+								<h3 style="font-size: 1.25rem; color: var(--color-text); margin-bottom: 0.5rem;">Retours faciles</h3>
+								<p style="color: var(--color-text-light); margin: 0;">Vous avez 30 jours pour retourner un article si vous n'êtes pas satisfait.</p>
+							</div>
+						</li>
+						<li style="padding: 1rem 0; display: flex; align-items: start; gap: 1rem;">
+							<span style="font-size: 1.5rem;">🎁</span>
+							<div>
+								<h3 style="font-size: 1.25rem; color: var(--color-text); margin-bottom: 0.5rem;">Offres exclusives</h3>
+								<p style="color: var(--color-text-light); margin: 0;">Profitez d'offres spéciales et de promotions réservées à nos membres.</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+	</div>
+{% endblock %}

@@ -12,6 +12,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategoryRepository extends ServiceEntityRepository
 {
+    /**
+     * Initialise le dépôt pour l'entité Category
+     * 
+     * @param ManagerRegistry $registry Le registre des gestionnaires de Doctrine
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);

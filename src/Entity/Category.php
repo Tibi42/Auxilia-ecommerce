@@ -36,11 +36,22 @@ class Category
         return $this->id;
     }
 
+    /**
+     * Récupère le nom de la catégorie
+     * 
+     * @return string|null Le nom de la catégorie
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * Définit le nom de la catégorie
+     * 
+     * @param string $name Le nouveau nom
+     * @return static
+     */
     public function setName(string $name): static
     {
         $this->name = $name;
@@ -48,11 +59,22 @@ class Category
         return $this;
     }
 
+    /**
+     * Récupère l'identifiant URL-friendly (slug) de la catégorie
+     * 
+     * @return string|null Le slug de la catégorie
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    /**
+     * Définit l'identifiant URL-friendly (slug) de la catégorie
+     * 
+     * @param string|null $slug Le nouveau slug
+     * @return static
+     */
     public function setSlug(?string $slug): static
     {
         $this->slug = $slug;

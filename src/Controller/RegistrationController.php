@@ -11,14 +11,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils; // Added for SecurityController
 
 /**
  * Contrôleur gérant l'inscription des nouveaux utilisateurs
+ * 
+ * Permet la création d'un nouveau compte client avec hachage sécurisé du mot de passe
+ * et connexion automatique suite à la validation du formulaire.
  */
 class RegistrationController extends AbstractController
 {
     /**
      * Gère l'affichage du formulaire et le processus d'inscription
+     * 
+     * @param Request $request La requête HTTP entrante
+     * @param UserPasswordHasherInterface $userPasswordHasher Le service de hachage de mot de passe
+     * @param Security $security Le service de sécurité pour la connexion automatique
+     * @param EntityManagerInterface $entityManager Le gestionnaire d'entités de Doctrine
+     * @return Response Une instance de Response vers la vue d'inscription ou une redirection après succès
      */
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response

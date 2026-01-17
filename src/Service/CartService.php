@@ -20,6 +20,14 @@ class CartService
     private $entityManager;
     private ?array $fullCart = null;
 
+    /**
+     * Initialise le service avec les dépendances nécessaires
+     * 
+     * @param RequestStack $requestStack Pile de requêtes pour accéder à la session
+     * @param ProductRepository $productRepository Le repository pour charger les produits
+     * @param Security $security Le service de sécurité pour identifier l'utilisateur
+     * @param EntityManagerInterface $entityManager Le gestionnaire d'entités pour persister le panier
+     */
     public function __construct(
         RequestStack $requestStack,
         ProductRepository $productRepository,
@@ -34,6 +42,8 @@ class CartService
 
     /**
      * Ajoute un produit au panier ou incrémente sa quantité
+     * 
+     * @param int $id L'identifiant du produit à ajouter
      */
     public function add(int $id): void
     {
@@ -52,6 +62,8 @@ class CartService
 
     /**
      * Retire un produit du panier ou décrémente sa quantité
+     * 
+     * @param int $id L'identifiant du produit à retirer
      */
     public function remove(int $id): void
     {
@@ -72,6 +84,8 @@ class CartService
 
     /**
      * Supprime un produit du panier (toutes les quantités)
+     * 
+     * @param int $id L'identifiant du produit à supprimer
      */
     public function deleteAll(int $id) // Changed return type from void to implicit as per provided code
     {
@@ -88,6 +102,8 @@ class CartService
 
     /**
      * Supprime une sélection de produits du panier
+     * 
+     * @param array $ids Liste des identifiants des produits à supprimer
      */
     public function deleteSelection(array $ids) // Changed return type from void to implicit as per provided code
     {
@@ -116,6 +132,8 @@ class CartService
 
     /**
      * Récupère le contenu détaillé du panier avec les entités Product
+     * 
+     * @return array Un tableau d'éléments du panier, chacun contenant 'product' (l'entité Product) et 'quantity'
      */
     public function getFullCart(): array
     {
@@ -147,6 +165,8 @@ class CartService
 
     /**
      * Calcule le montant total du panier
+     * 
+     * @return float Le montant total
      */
     public function getTotal(): float
     {
@@ -161,6 +181,8 @@ class CartService
 
     /**
      * Calcule le nombre total d'articles dans le panier
+     * 
+     * @return int Le nombre total d'articles
      */
     public function getQuantitySum(): int
     {

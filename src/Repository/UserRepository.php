@@ -15,13 +15,22 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    /**
+     * Initialise le dépôt pour l'entité User
+     * 
+     * @param ManagerRegistry $registry Le registre des gestionnaires de Doctrine
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
 
     /**
-     * Utilisé pour mettre à jour (rehacher) automatiquement le mot de passe de l'utilisateur au fil du temps.
+     * Met à jour (rehache) automatiquement le mot de passe de l'utilisateur au fil du temps.
+     * 
+     * @param PasswordAuthenticatedUserInterface $user L'utilisateur dont le mot de passe doit être mis à jour
+     * @param string $newHashedPassword Le nouveau mot de passe haché
+     * @throws UnsupportedUserException Si l'instance d'utilisateur n'est pas gérée par ce dépôt
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {

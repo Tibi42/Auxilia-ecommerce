@@ -9,14 +9,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * Contrôleur gérant l'affichage du catalogue de produits côté client
+ * 
+ * Permet aux utilisateurs de naviguer dans le catalogue, d'appliquer des filtres de catégorie,
+ * de rechercher des produits par nom ou description, et de trier les résultats.
  */
 final class ProductController extends AbstractController
 {
     /**
      * Liste les produits avec filtres, recherche, tri et pagination
+     * 
+     * @param ProductRepository $productRepository Le repository pour les produits
+     * @param CategoryRepository $categoryRepository Le repository pour les catégories
+     * @param PaginatorInterface $paginator Le service de pagination KNP
+     * @param Request $request La requête HTTP entrante
+     * @return Response Une instance de Response vers la vue du catalogue
      */
     #[Route('/product', name: 'app_product')]
     public function index(ProductRepository $productRepository, CategoryRepository $categoryRepository, PaginatorInterface $paginator, Request $request): Response

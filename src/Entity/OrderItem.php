@@ -14,26 +14,42 @@ class OrderItem
     #[ORM\Column]
     private ?int $id = null;
 
+<<<<<<< HEAD
     #[ORM\ManyToOne(inversedBy: 'orderItems')]
+=======
+    #[ORM\ManyToOne(inversedBy: 'items')]
+>>>>>>> 6faf1b0eed04b37f0acd80b72ee2fc49a91ceeb7
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $orderRef = null;
 
     #[ORM\ManyToOne]
+<<<<<<< HEAD
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
+=======
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Product $product = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $productName = null;
+
+>>>>>>> 6faf1b0eed04b37f0acd80b72ee2fc49a91ceeb7
     #[ORM\Column]
     private ?int $quantity = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $price = null;
 
+<<<<<<< HEAD
     #[ORM\Column(length: 255)]
     private ?string $productName = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $total = null;
 
+=======
+>>>>>>> 6faf1b0eed04b37f0acd80b72ee2fc49a91ceeb7
     public function getId(): ?int
     {
         return $this->id;
@@ -63,6 +79,21 @@ class OrderItem
         return $this;
     }
 
+<<<<<<< HEAD
+=======
+    public function getProductName(): ?string
+    {
+        return $this->productName;
+    }
+
+    public function setProductName(string $productName): static
+    {
+        $this->productName = $productName;
+
+        return $this;
+    }
+
+>>>>>>> 6faf1b0eed04b37f0acd80b72ee2fc49a91ceeb7
     public function getQuantity(): ?int
     {
         return $this->quantity;
@@ -86,6 +117,7 @@ class OrderItem
 
         return $this;
     }
+<<<<<<< HEAD
 
     public function getProductName(): ?string
     {
@@ -110,4 +142,6 @@ class OrderItem
 
         return $this;
     }
+=======
+>>>>>>> 6faf1b0eed04b37f0acd80b72ee2fc49a91ceeb7
 }

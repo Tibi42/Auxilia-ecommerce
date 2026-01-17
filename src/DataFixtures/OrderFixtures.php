@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Order;
+use App\Entity\OrderItem;
+use App\Entity\Product;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -15,11 +17,12 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        // Récupérer les utilisateurs
+        // Récupérer les utilisateurs et les produits
         $users = $manager->getRepository(User::class)->findAll();
+        $products = $manager->getRepository(Product::class)->findAll();
 
-        if (empty($users)) {
-            return; // Pas d'utilisateurs, on ne crée pas de commandes
+        if (empty($users) || empty($products)) {
+            return; // Pas d'utilisateurs ou pas de produits, on arrête
         }
 
         $statuses = ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'];
@@ -34,7 +37,6 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
                 $order = new Order();
                 $order->setUser($user);
                 $order->setStatus($statuses[array_rand($statuses)]);
-                $order->setTotal($totals[array_rand($totals)]);
 
                 // Date aléatoire dans les 30 derniers jours
                 $date = new \DateTime();
@@ -44,6 +46,28 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
                 $order->setDateat($date);
 
                 $manager->persist($order);
+
+                // Ajouter des items à la commande
+                $numberOfItems = rand(1, 5);
+                $totalOrder = 0;
+
+                for ($j = 0; $j < $numberOfItems; $j++) {
+                    $product = $products[array_rand($products)];
+                    $quantity = rand(1, 3);
+                    $price = $product->getPrice();
+
+                    $orderItem = new OrderItem();
+                    $orderItem->setOrderRef($order);
+                    $orderItem->setProduct($product);
+                    $orderItem->setProductName($product->getName());
+                    $orderItem->setQuantity($quantity);
+                    $orderItem->setPrice($price);
+
+                    $manager->persist($orderItem);
+                    $totalOrder += $price * $quantity;
+                }
+
+                $order->setTotal((string)$totalOrder);
             }
         }
 
@@ -54,6 +78,7 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
+            ProductFixtures::class,
         ];
     }
 }

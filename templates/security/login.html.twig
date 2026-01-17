@@ -1,71 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion - Auxilia E-commerce{% endblock %}
+{% block title %}Connexion - Auxilia E-commerce
+{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="auth-form enhanced">
-            <div class="auth-header">
-                <h1>Connexion</h1>
-                <p class="auth-subtitle">Connectez-vous à votre compte</p>
-            </div>
+	<div class="container">
+		<div class="auth-form enhanced">
+			<div class="auth-header">
+				<h1>Connexion</h1>
+				<p class="auth-subtitle">Connectez-vous à votre compte</p>
+			</div>
 
-            {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
+			{% if error %}
+				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% endif %}
 
-            {% if app.user %}
-                <div class="alert" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;">
-                    Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}" class="link-primary">Déconnexion</a>
-                </div>
-            {% endif %}
+			{% if app.user %}
+				<div class="alert" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;">
+					Vous êtes connecté en tant que
+					{{ app.user.userIdentifier }},
+					<a href="{{ path('app_logout') }}" class="link-primary">Déconnexion</a>
+				</div>
+			{% endif %}
 
-            <form method="post" class="auth-form-inner">
-                <div class="form-group">
-                    <label for="inputEmail">Email</label>
-                    <input 
-                        type="email" 
-                        value="{{ last_username }}" 
-                        name="_username" 
-                        id="inputEmail" 
-                        class="form-control" 
-                        autocomplete="email" 
-                        placeholder="votre@email.com"
-                        required 
-                        autofocus>
-                </div>
+			<form method="post" class="auth-form-inner">
+				<div class="form-group">
+					<label for="inputEmail">Email</label>
+					<input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="form-control" autocomplete="email" placeholder="votre@email.com" required autofocus>
+				</div>
 
-                <div class="form-group">
-                    <label for="inputPassword">Mot de passe</label>
-                    <input 
-                        type="password" 
-                        name="_password" 
-                        id="inputPassword" 
-                        class="form-control" 
-                        autocomplete="current-password" 
-                        placeholder="••••••••"
-                        required>
-                </div>
+				<div class="form-group">
+					<label for="inputPassword">Mot de passe</label>
+					<input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" placeholder="••••••••" required>
+				</div>
 
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                <div class="form-actions">
-                    <button class="btn btn-primary btn-large btn-full" type="submit">
-                        <span class="btn-text">Se connecter</span>
-                        <span class="btn-icon">→</span>
-                    </button>
-                </div>
-            </form>
+				<div class="form-actions">
+					<button class="btn btn-primary btn-large btn-full" type="submit">
+						<span class="btn-text">Se connecter</span>
+						<span class="btn-icon">→</span>
+					</button>
+				</div>
+			</form>
 
-            <div class="auth-footer">
-                <p class="auth-link">
-                    <a href="{{ path('app_forgot_password_request') }}" class="link-primary">Mot de passe oublié ?</a>
-                </p>
-                <p class="auth-link" style="margin-top: 1rem;">
-                    Pas encore de compte ? 
-                    <a href="{{ path('app_register') }}" class="link-primary">Inscrivez-vous</a>
-                </p>
-            </div>
-        </div>
-    </div>
+			<div class="auth-footer">
+				<p class="auth-link">
+					<a href="{{ path('app_forgot_password_request') }}" class="link-primary">Mot de passe oublié ?</a>
+				</p>
+				<p class="auth-link" style="margin-top: 1rem;">
+					Pas encore de compte ?
+					<a href="{{ path('app_register') }}" class="link-primary">Inscrivez-vous</a>
+				</p>
+			</div>
+		</div>
+	</div>
 {% endblock %}

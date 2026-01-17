@@ -1,46 +1,66 @@
 <footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Auxilia E-commerce</h3>
-                <p>123 Rue du Commerce<br>75000 Paris</p>
-                <p>Tél : +33 (0) 1 23 45 67 89</p>
-            </div>
-            <div class="footer-section">
-                <h4>Catégories</h4>
-                <ul>
-                    <li><a href="{{ path('app_product') }}">Tous les produits</a></li>
-                    <li><a href="{{ path('app_product') }}">Électronique</a></li>
-                    <li><a href="{{ path('app_product') }}">Vêtements</a></li>
-                    <li><a href="{{ path('app_product') }}">Maison</a></li>
-                    <li><a href="{{ path('app_product') }}">Sport</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Informations</h4>
-                <ul>
-                    <li><a href="#">Livraison</a></li>
-                    <li><a href="{{ path('app_contact') }}">Contact</a></li>
-                    <li><a href="{{ path('app_about') }}">À propos</a></li>
-                    <li><a href="#">Mentions légales</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Votre compte</h4>
-                <ul>
-                    {% if app.user %}
-                        <li><a href="{{ path('app_profile') }}">Mon compte</a></li>
-                        <li><a href="{{ path('app_orders') }}">Mes commandes</a></li>
-                    {% else %}
-                        <li><a href="{{ path('app_login') }}">Connexion</a></li>
-                        <li><a href="{{ path('app_register') }}">Inscription</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; {{ 'now'|date('Y') }} Auxilia E-commerce. Tous droits réservés.</p>
-        </div>
-    </div>
+	<div class="container">
+		<div class="footer-content">
+			<div class="footer-section">
+				<h3>Auxilia E-commerce</h3>
+				<p>123 Rue du Commerce<br>75000 Paris</p>
+				<p>Tél : +33 (0) 1 23 45 67 89</p>
+				<div class="footer-socials">
+					<a href="#" target="_blank" title="Facebook">
+						<i class="fab fa-facebook-f"></i>
+					</a>
+					<a href="#" target="_blank" title="Instagram">
+						<i class="fab fa-instagram"></i>
+					</a>
+					<a href="#" target="_blank" title="Twitter">
+						<i class="fab fa-x-twitter"></i>
+					</a>
+				</div>
+			</div>
+			<div class="footer-section">
+				<h4>Catégories</h4>
+				<ul>
+					<li><ahref="{{ path('app_product') }}">Tous les produits</a></li>
+					<li><ahref="{{ path('app_product') }}">Électronique</a></li>
+					<li><ahref="{{ path('app_product') }}">Vêtements</a></li>
+					<li><ahref="{{ path('app_product') }}">Maison</a></li>
+					<li><ahref="{{ path('app_product') }}">Sport</a></li>
+				</ul>
+			</div>
+			<div class="footer-section">
+				<h4>Informations</h4>
+				<ul>
+					<li><a href="#">Livraison</a></li>
+					<li><ahref="{{ path('app_contact') }}">Contact</a></li>
+					<li><ahref="{{ path('app_about') }}">À propos</a></li>
+					<li><a href="#">Mentions légales</a></li>
+				</ul>
+			</div>
+			<div class="footer-section">
+				<h4>Votre compte</h4>
+				<ul>
+					{% if app.user %}
+						<li>
+							<a href="{{ path('app_profile') }}">Mon compte</a>
+						</li>
+						<li>
+							<a href="{{ path('app_orders') }}">Mes commandes</a>
+						</li>
+					{% else %}
+						<li>
+							<a href="{{ path('app_login') }}">Connexion</a>
+						</li>
+						<li>
+							<a href="{{ path('app_register') }}">Inscription</a>
+						</li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<p>&copy;
+				{{ 'now'|date('Y') }}
+				Auxilia E-commerce. Tous droits réservés.</p>
+		</div>
+	</div>
 </footer>
-

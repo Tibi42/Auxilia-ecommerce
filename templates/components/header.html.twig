@@ -1,40 +1,58 @@
 <header class="header">
-    <div class="header-top">
-        <div class="container">
-            <p class="header-top-text">Livraison gratuite à partir de 50€ d'achat</p>
-        </div>
-    </div>
-    <nav class="navbar">
-        <div class="container">
-            <a href="{{ path('app_home') }}" class="logo">Auxilia E-commerce</a>
-            <ul class="nav-menu">
-                <li><a href="{{ path('app_home') }}">Accueil</a></li>
-                <li><a href="{{ path('app_product') }}">Produits</a></li>
-                <li><a href="{{ path('app_about') }}">À propos</a></li>
-                <li><a href="{{ path('app_contact') }}">Contact</a></li>
-            </ul>
-            <div class="header-actions">
-                <form action="{{ path('app_product') }}" method="get" class="search-form" style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; margin-right: 1rem;">
-                    <input type="text" name="q" placeholder="Rechercher..." style="border: none; padding: 0.5rem; outline: none;">
-                    <button type="submit" style="background: none; border: none; padding: 0.5rem; cursor: pointer;">🔍</button>
-                </form>
-                {% if app.user %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('app_admin_dashboard') }}" class="login-link" style="background-color: var(--color-primary); color: white;">Admin</a>
-                    {% endif %}
-                    <a href="{{ path('app_profile') }}" class="account-icon">👤</a>
-                    <a href="{{ path('app_logout') }}" class="logout-link">Déconnexion</a>
-                {% else %}
-                    <a href="{{ path('app_login') }}" class="login-link">Connexion</a>
-                {% endif %}
-                <a href="{{ path('cart_index') }}" class="cart-icon" title="Voir mon panier">
-                    <i class="fas fa-shopping-cart"></i>
-                    {% if cart_count() > 0 %}
-                        <span class="cart-count">{{ cart_count() }}</span>
-                    {% endif %}
-                </a>
-            </div>
-        </div>
-    </nav>
+	<div class="header-top">
+		<div class="container header-top-content">
+			<p class="header-top-text">Livraison gratuite à partir de 50€ d'achat</p>
+			<div class="header-socials">
+				<a href="#" target="_blank" title="Facebook">
+					<i class="fab fa-facebook-f"></i>
+				</a>
+				<a href="#" target="_blank" title="Instagram">
+					<i class="fab fa-instagram"></i>
+				</a>
+				<a href="#" target="_blank" title="Twitter">
+					<i class="fab fa-x-twitter"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<nav class="navbar">
+		<div class="container">
+			<a href="{{ path('app_home') }}" class="logo">Auxilia E-commerce</a>
+			<ul class="nav-menu">
+				<li>
+					<a href="{{ path('app_home') }}">Accueil</a>
+				</li>
+				<li>
+					<a href="{{ path('app_product') }}">Produits</a>
+				</li>
+				<li>
+					<a href="{{ path('app_about') }}">À propos</a>
+				</li>
+				<li>
+					<a href="{{ path('app_contact') }}">Contact</a>
+				</li>
+			</ul>
+			<div class="header-actions">
+				<form action="{{ path('app_product') }}" method="get" class="search-form" style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; margin-right: 1rem;">
+					<input type="text" name="q" placeholder="Rechercher..." style="border: none; padding: 0.5rem; outline: none;">
+					<button type="submit" style="background: none; border: none; padding: 0.5rem; cursor: pointer;">🔍</button>
+				</form>
+				{% if app.user %}
+					{% if is_granted('ROLE_ADMIN') %}
+						<a href="{{ path('app_admin_dashboard') }}" class="login-link" style="background-color: var(--color-primary); color: white;">Admin</a>
+					{% endif %}
+					<a href="{{ path('app_profile') }}" class="account-icon">👤</a>
+					<a href="{{ path('app_logout') }}" class="logout-link">Déconnexion</a>
+				{% else %}
+					<a href="{{ path('app_login') }}" class="login-link">Connexion</a>
+				{% endif %}
+				<a href="{{ path('cart_index') }}" class="cart-icon" title="Voir mon panier">
+					<i class="fas fa-shopping-cart"></i>
+					{% if cart_count() > 0 %}
+						<span class="cart-count">{{ cart_count() }}</span>
+					{% endif %}
+				</a>
+			</div>
+		</div>
+	</nav>
 </header>
-

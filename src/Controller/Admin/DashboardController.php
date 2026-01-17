@@ -9,8 +9,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * Contrôleur du tableau de bord de l'administration
+ * 
+ * Centralise les statistiques globales et les activités récentes de la boutique.
+ */
 final class DashboardController extends AbstractController
 {
+    /**
+     * Affiche la vue d'ensemble du tableau de bord
+     * 
+     * @param ProductRepository $productRepository Le repository pour les statistiques produits
+     * @param UserRepository $userRepository Le repository pour les statistiques utilisateurs
+     * @param OrderRepository $orderRepository Le repository pour les statistiques commandes
+     * @return Response Une instance de Response vers la vue du dashboard
+     */
     #[Route('/admin/dashboard', name: 'app_admin_dashboard')]
     public function index(
         ProductRepository $productRepository,
