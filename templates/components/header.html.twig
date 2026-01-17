@@ -18,8 +18,10 @@
 	<nav class="navbar">
 		<div class="container">
 			<a href="{{ path('app_home') }}" class="logo">Auxilia E-commerce</a>
-			<button class="menu-toggle" onclick="document.querySelector('.nav-menu').classList.toggle('active')" aria-label="Menu">
-				<i class="fas fa-bars"></i>
+			<button class="menu-toggle" onclick="const menu = document.querySelector('.nav-menu'); const btn = this; menu.classList.toggle('active'); btn.classList.toggle('active');" aria-label="Menu">
+				<span class="hamburger-line"></span>
+				<span class="hamburger-line"></span>
+				<span class="hamburger-line"></span>
 			</button>
 			<ul class="nav-menu">
 				<li>
