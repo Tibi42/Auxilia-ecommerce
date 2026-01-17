@@ -46,16 +46,32 @@ class Order
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    /**
+     * Récupère l'identifiant unique de la commande
+     * 
+     * @return int|null L'ID de la commande
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Récupère le statut actuel de la commande
+     * 
+     * @return string|null Le statut de la commande
+     */
     public function getStatus(): ?string
     {
         return $this->status;
     }
 
+    /**
+     * Définit le statut de la commande
+     * 
+     * @param string $status Le nouveau statut
+     * @return static
+     */
     public function setStatus(string $status): static
     {
         $this->status = $status;
@@ -63,11 +79,22 @@ class Order
         return $this;
     }
 
+    /**
+     * Récupère le montant total de la commande
+     * 
+     * @return string|null Le montant total
+     */
     public function getTotal(): ?string
     {
         return $this->total;
     }
 
+    /**
+     * Définit le montant total de la commande
+     * 
+     * @param string $total Le montant total
+     * @return static
+     */
     public function setTotal(string $total): static
     {
         $this->total = $total;
@@ -75,11 +102,22 @@ class Order
         return $this;
     }
 
+    /**
+     * Récupère la date de création de la commande
+     * 
+     * @return \DateTime|null La date de la commande
+     */
     public function getDateat(): ?\DateTime
     {
         return $this->dateat;
     }
 
+    /**
+     * Définit la date de création de la commande
+     * 
+     * @param \DateTime $dateat La nouvelle date
+     * @return static
+     */
     public function setDateat(\DateTime $dateat): static
     {
         $this->dateat = $dateat;
@@ -87,11 +125,22 @@ class Order
         return $this;
     }
 
+    /**
+     * Récupère l'utilisateur associé à la commande
+     * 
+     * @return User|null L'entité User
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * Définit l'utilisateur associé à la commande
+     * 
+     * @param User|null $user L'entité User
+     * @return static
+     */
     public function setUser(?User $user): static
     {
         $this->user = $user;

@@ -12,6 +12,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductRepository extends ServiceEntityRepository
 {
+    /**
+     * Initialise le dépôt pour l'entité Product
+     * 
+     * @param ManagerRegistry $registry Le registre des gestionnaires de Doctrine
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Product::class);

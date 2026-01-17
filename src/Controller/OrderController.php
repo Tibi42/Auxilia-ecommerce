@@ -13,11 +13,18 @@ use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Contrôleur gérant les commandes côté client
+ * 
+ * Ce contrôleur permet à l'utilisateur de consulter l'historique de ses commandes,
+ * de voir le détail d'une commande spécifique, de passer par le processus de checkout
+ * et de valider sa commande après vérification de ses coordonnées.
  */
 class OrderController extends AbstractController
 {
     /**
      * Liste l'historique des commandes de l'utilisateur connecté
+     * 
+     * @param OrderRepository $orderRepository Le repository pour récupérer les commandes
+     * @return Response Une instance de Response contenant la vue de l'historique
      */
     #[Route('/profile/orders', name: 'app_orders')]
     public function index(OrderRepository $orderRepository): Response
@@ -42,6 +49,10 @@ class OrderController extends AbstractController
 
     /**
      * Affiche les détails d'une commande spécifique de l'utilisateur
+     * 
+     * @param int $id L'identifiant de la commande
+     * @param OrderRepository $orderRepository Le repository pour récupérer la commande
+     * @return Response Une instance de Response contenant la vue des détails de la commande
      */
     #[Route('/profile/orders/{id}', name: 'app_order_show')]
     public function show(int $id, OrderRepository $orderRepository): Response
@@ -68,6 +79,12 @@ class OrderController extends AbstractController
 
     /**
      * Vérifie les informations de l'utilisateur avant de valider la commande
+     * 
+     * Vérifie si l'utilisateur est connecté, si le panier n'est pas vide et si les
+     * coordonnées de livraison (adresse, ville, code postal, téléphone, nom, prénom) sont complètes.
+     * 
+     * @param CartService $cartService Le service gérant le panier
+     * @return Response Une instance de Response vers la vue de confirmation ou une redirection
      */
     #[Route('/checkout', name: 'app_order_checkout')]
     public function checkout(CartService $cartService): Response
@@ -106,6 +123,10 @@ class OrderController extends AbstractController
 
     /**
      * Valide la commande, crée l'entité Order et vide le panier
+     * 
+     * @param CartService $cartService Le service gérant le panier
+     * @param EntityManagerInterface $entityManager Le gestionnaire d'entités de Doctrine
+     * @return Response Une instance de Response redirigeant vers la page de succès
      */
     #[Route('/checkout/validate', name: 'app_order_validate', methods: ['POST'])]
     public function validate(CartService $cartService, EntityManagerInterface $entityManager): Response
@@ -141,6 +162,8 @@ class OrderController extends AbstractController
 
     /**
      * Affiche la page de succès après une commande
+     * 
+     * @return Response Une instance de Response contenant la vue de succès
      */
     #[Route('/checkout/success', name: 'app_order_success')]
     public function success(): Response

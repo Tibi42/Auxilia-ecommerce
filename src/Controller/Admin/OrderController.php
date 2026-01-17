@@ -10,7 +10,10 @@ use Symfony\Component\Routing\Attribute\Route;
 final class OrderController extends AbstractController
 {
     /**
-     * Liste toutes les commandes de la boutique
+     * Liste toutes les commandes de la boutique pour l'administration
+     * 
+     * @param OrderRepository $orderRepository Le repository pour récupérer toutes les commandes
+     * @return Response Une instance de Response vers la liste des commandes admin
      */
     #[Route('/admin/orders', name: 'app_admin_orders')]
     public function index(OrderRepository $orderRepository): Response
@@ -23,7 +26,11 @@ final class OrderController extends AbstractController
     }
 
     /**
-     * Affiche les détails d'une commande spécifique
+     * Affiche les détails d'une commande spécifique pour l'administration
+     * 
+     * @param int $id L'identifiant de la commande
+     * @param OrderRepository $orderRepository Le repository pour récupérer la commande
+     * @return Response Une instance de Response vers la vue détaillée ou une redirection
      */
     #[Route('/admin/orders/{id}', name: 'app_admin_order_show')]
     public function show(int $id, OrderRepository $orderRepository): Response

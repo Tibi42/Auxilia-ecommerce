@@ -10,14 +10,31 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email as MimeEmail;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * Contrôleur gérant les pages statiques et fonctionnelles simples (À propos, Contact)
+ */
 final class PageController extends AbstractController
 {
+    /**
+     * Affiche la page "À propos"
+     * 
+     * @return Response Une instance de Response vers la vue à propos
+     */
     #[Route('/a-propos', name: 'app_about')]
     public function about(): Response
     {
         return $this->render('page/about.html.twig');
     }
 
+    /**
+     * Affiche et gère le formulaire de contact
+     * 
+     * Envoie un email au destinataire configuré si le formulaire est valide.
+     * 
+     * @param Request $request La requête HTTP entrante
+     * @param MailerInterface $mailer Le service d'envoi d'emails de Symfony
+     * @return Response Une instance de Response vers la vue contact ou une redirection
+     */
     #[Route('/contact', name: 'app_contact')]
     public function contact(Request $request, MailerInterface $mailer): Response
     {
@@ -56,4 +73,3 @@ final class PageController extends AbstractController
         ]);
     }
 }
-

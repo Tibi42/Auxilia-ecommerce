@@ -20,6 +20,9 @@ final class ProductController extends AbstractController
 {
     /**
      * Liste tous les produits pour l'administration
+     * 
+     * @param ProductRepository $productRepository Le repository pour récupérer tous les produits
+     * @return Response Une instance de Response vers la liste des produits admin
      */
     #[Route('/admin/products', name: 'app_admin_products')]
     public function index(ProductRepository $productRepository): Response
@@ -33,6 +36,11 @@ final class ProductController extends AbstractController
 
     /**
      * Crée un nouveau produit avec gestion de l'upload d'image
+     * 
+     * @param Request $request La requête HTTP entrante
+     * @param EntityManagerInterface $entityManager Le gestionnaire d'entités de Doctrine
+     * @param SluggerInterface $slugger Le service pour générer des noms de fichiers sécurisés
+     * @return Response Une instance de Response vers le formulaire ou la liste après succès
      */
     #[Route('/admin/product/new', name: 'app_admin_product_new')]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
@@ -81,6 +89,12 @@ final class ProductController extends AbstractController
 
     /**
      * Modifie un produit existant et met à jour son image si nécessaire
+     * 
+     * @param Request $request La requête HTTP entrante
+     * @param Product $product L'entité Product à modifier
+     * @param EntityManagerInterface $entityManager Le gestionnaire d'entités de Doctrine
+     * @param SluggerInterface $slugger Le service pour générer des noms de fichiers sécurisés
+     * @return Response Une instance de Response vers le formulaire ou la liste après succès
      */
     #[Route('/admin/product/{id}/edit', name: 'app_admin_product_edit')]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
@@ -131,6 +145,11 @@ final class ProductController extends AbstractController
 
     /**
      * Supprime un produit et son image associée
+     * 
+     * @param Request $request La requête HTTP entrante (pour le jeton CSRF)
+     * @param Product $product L'entité Product à supprimer
+     * @param EntityManagerInterface $entityManager Le gestionnaire d'entités de Doctrine
+     * @return Response Une redirection vers la liste des produits admin
      */
     #[Route('/admin/product/{id}/delete', name: 'app_admin_product_delete', methods: ['POST'])]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
