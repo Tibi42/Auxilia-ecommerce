@@ -98,7 +98,7 @@
 					<div style="display: flex; flex-direction: column; gap: 1rem;">
 						{% if recentOrders|length > 0 %}
 							{% for order in recentOrders %}
-								<div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #f8fafc; border-radius: 12px; border: 1px solid #edf2f7;">
+								<a href="{{ path('app_admin_order_show', {'id': order.id}) }}" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #f8fafc; border-radius: 12px; border: 1px solid #edf2f7; text-decoration: none; color: inherit; transition: all 0.2s ease; cursor: pointer;" onmouseover="this.style.background='#e2e8f0'; this.style.borderColor='#cbd5e0'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)';" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#edf2f7'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
 									<div style="display: flex; align-items: center; gap: 1rem;">
 										<div style="width: 40px; height: 40px; background: #dbeafe; color: #1e40af; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem;">
 											<i class="fas fa-shopping-bag"></i>
@@ -122,7 +122,7 @@
 										{% set info = status_info[order.status|lower] ?? {'label': order.status, 'color': '#475569'} %}
 										<span style="font-size: 0.75rem; font-weight: 600; color: {{ info.color }};">{{ info.label }}</span>
 									</div>
-								</div>
+								</a>
 							{% endfor %}
 						{% else %}
 							<div style="background: #f8fafc; border: 2px dashed #cbd5e0; border-radius: 12px; padding: 3rem; text-align: center; color: #718096;">

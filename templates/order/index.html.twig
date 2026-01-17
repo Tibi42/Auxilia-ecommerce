@@ -77,11 +77,11 @@
 										</div>
 									</div>
 
-									{% if order.items|length > 0 %}
+									{% if order.orderItems|length > 0 %}
 										<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee;">
 											<h4 style="font-size: 0.9rem; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">Articles :</h4>
 											<ul style="list-style: none; padding: 0; margin: 0;">
-												{% for item in order.items %}
+												{% for item in order.orderItems %}
 													<li style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--color-text-light); margin-bottom: 0.25rem;">
 														<span>{{ item.quantity }}x
 															{{ item.productName }}</span>
