@@ -4,6 +4,7 @@ namespace App\Form\Admin;
 
 use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -17,6 +18,23 @@ class ProductType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $categories = $options['categories'] ?? [];
+        $categoryChoices = [];
+        
+        // Créer un tableau associatif pour les choix
+        // Les catégories peuvent être des objets Category ou des chaînes
+        foreach ($categories as $category) {
+            if (is_object($category) && method_exists($category, 'getName')) {
+                $categoryName = $category->getName();
+            } else {
+                $categoryName = (string) $category;
+            }
+            $categoryChoices[$categoryName] = $categoryName;
+        }
+        
+        // Trier les choix par ordre alphabétique
+        ksort($categoryChoices);
+        
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nom du produit',
@@ -33,8 +51,14 @@ class ProductType extends AbstractType
                 'label' => 'Stock',
                 'required' => false,
             ])
-            ->add('category', TextType::class, [
+            ->add('category', ChoiceType::class, [
                 'label' => 'Catégorie',
+                'choices' => $categoryChoices,
+                'placeholder' => 'Sélectionner une catégorie',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-select',
+                ],
             ])
             ->add('image', FileType::class, [
                 'label' => 'Image (JPG, PNG, WEBP)',
@@ -59,6 +83,7 @@ class ProductType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Product::class,
+            'categories' => [],
         ]);
     }
 }

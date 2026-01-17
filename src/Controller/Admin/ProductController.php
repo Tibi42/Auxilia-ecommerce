@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Product;
 use App\Form\Admin\ProductType;
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,13 +59,16 @@ final class ProductController extends AbstractController
      * @return Response Une instance de Response vers le formulaire ou la liste après succès
      */
     #[Route('/admin/product/new', name: 'app_admin_product_new')]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, CategoryRepository $categoryRepository): Response
     {
         // Sécurité : Vérification explicite du rôle admin
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         
+        $categories = $categoryRepository->findAllOrderedByName();
         $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductType::class, $product, [
+            'categories' => $categories,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -135,12 +139,15 @@ final class ProductController extends AbstractController
      * @return Response Une instance de Response vers le formulaire ou la liste après succès
      */
     #[Route('/admin/product/{id}/edit', name: 'app_admin_product_edit')]
-    public function edit(Request $request, Product $product, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function edit(Request $request, Product $product, EntityManagerInterface $entityManager, SluggerInterface $slugger, CategoryRepository $categoryRepository): Response
     {
         // Sécurité : Vérification explicite du rôle admin
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         
-        $form = $this->createForm(ProductType::class, $product);
+        $categories = $categoryRepository->findAllOrderedByName();
+        $form = $this->createForm(ProductType::class, $product, [
+            'categories' => $categories,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

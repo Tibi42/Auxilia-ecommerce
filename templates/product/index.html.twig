@@ -49,11 +49,9 @@
 				{% endfor %}
 			</div>
 
-			<nav class="pagination-wrapper" aria-label="Navigation de pagination">
-				<div class="pagination">
-					{{ knp_pagination_render(pagination) }}
-				</div>
-			</nav>
+			<div class="pagination" style="display: flex; justify-content: center; margin-top: 2rem;">
+				{{ knp_pagination_render(pagination) }}
+			</div>
 		{% else %}
 			<div class="no-products">
 				<p>Aucun produit disponible pour le moment.</p>
