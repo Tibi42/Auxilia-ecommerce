@@ -34,12 +34,15 @@
 				<a href="{{ path('app_admin_orders') }}" style="color: white; text-decoration: underline; font-size: 0.9rem; margin-top: 0.5rem; display: inline-block;">Voir toutes →</a>
 			</div>
 
-			<div style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); padding: 2rem; border-radius: 12px; color: white;">
-				<div style="font-size: 3rem; margin-bottom: 0.5rem;">⚠️</div>
-				<h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; opacity: 0.9;">Stock faible</h3>
-				<p style="font-size: 2.5rem; font-weight: bold; margin: 0;">{{ stats.low_stock_products }}</p>
-				<span style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem; display: block;">Produits à réapprovisionner</span>
-			</div>
+			<a href="{{ path('app_admin_products', {'stock': 'low'}) }}" style="text-decoration: none; display: block; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+				<div style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); padding: 2rem; border-radius: 12px; color: white;">
+					<div style="font-size: 3rem; margin-bottom: 0.5rem;">⚠️</div>
+					<h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; opacity: 0.9;">Stock faible</h3>
+					<p style="font-size: 2.5rem; font-weight: bold; margin: 0;">{{ stats.low_stock_products }}</p>
+					<span style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem; display: block;">Produits à réapprovisionner</span>
+					<span style="color: white; text-decoration: underline; font-size: 0.9rem; margin-top: 0.5rem; display: inline-block;">Voir tous →</span>
+				</div>
+			</a>
 		</div>
 
 		<!-- Navigation rapide -->
