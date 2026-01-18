@@ -719,6 +719,14 @@ body {
     background-color: #888;
 }
 
+.star-rating {
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.star-rating:hover {
+    transform: scale(1.2);
+}
+
 .indicator.active {
     background-color: var(--color-primary);
     transform: scale(1.2);
