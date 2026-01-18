@@ -12,6 +12,7 @@
 			<div class="cart-content">
 				<div class="cart-items">
 					<form id="cart-selection-form" action="{{ path('cart_delete_selection') }}" method="post">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete-selection') }}">
 						<div style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
 							<div style="display: flex; align-items: center; gap: 0.5rem;">
 								<input type="checkbox" id="select-all" style="width: 18px; height: 18px; cursor: pointer;">
@@ -133,10 +134,12 @@ if (! selectAll || checkboxes.length === 0)
 return;
 
 
+
 function updateDeleteBtn() {
 const checkedCount = document.querySelectorAll('.item-checkbox:checked').length;
 if (deleteBtn) 
 deleteBtn.style.display = checkedCount > 0 ? 'flex' : 'none';
+
 
 }
 

@@ -64,6 +64,11 @@ final class CartController extends AbstractController
     #[Route('/cart/delete-selection', name: 'cart_delete_selection', methods: ['POST'])]
     public function deleteSelection(Request $request, CartService $cartService): Response
     {
+        if (!$this->isCsrfTokenValid('delete-selection', $request->request->get('_token'))) {
+            $this->addFlash('error', 'Jeton de sécurité invalide.');
+            return $this->redirectToRoute('cart_index');
+        }
+
         $ids = $request->request->all('ids');
         if (!empty($ids)) {
             $cartService->deleteSelection(array_map('intval', $ids));

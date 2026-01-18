@@ -9,6 +9,7 @@ use App\Entity\OrderItem;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -130,8 +131,13 @@ class OrderController extends AbstractController
      * @return Response Une instance de Response redirigeant vers la page de succès
      */
     #[Route('/checkout/validate', name: 'app_order_validate', methods: ['POST'])]
-    public function validate(CartService $cartService, EntityManagerInterface $entityManager): Response
+    public function validate(Request $request, CartService $cartService, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->isCsrfTokenValid('order-validate', $request->request->get('_token'))) {
+            $this->addFlash('error', 'Jeton de sécurité invalide.');
+            return $this->redirectToRoute('cart_index');
+        }
+
         /** @var User $user */
         $user = $this->getUser();
 

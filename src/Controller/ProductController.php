@@ -39,6 +39,11 @@ final class ProductController extends AbstractController
         $q = $request->query->get('q');
         $categoryName = $request->query->get('category');
 
+        // Sécurité : Liste blanche des directions de tri autorisées
+        if (!in_array(strtolower($direction), ['asc', 'desc'])) {
+            $direction = 'asc';
+        }
+
         // Sécurité : Liste blanche des champs de tri autorisés
         $allowedSorts = ['p.price', 'p.name', 'p.id'];
         if (!in_array($sort, $allowedSorts)) {

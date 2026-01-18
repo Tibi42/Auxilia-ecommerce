@@ -47,6 +47,7 @@
 					</a>
 
 					<form action="{{ path('app_order_validate') }}" method="POST">
+						<input type="hidden" name="_token" value="{{ csrf_token('order-validate') }}">
 						<button type="submit" class="btn btn-primary" style="padding: 1rem 2.5rem; border-radius: 14px; font-weight: 700; font-size: 1.1rem; box-shadow: 0 10px 15px rgba(37, 99, 235, 0.2); border: none; cursor: pointer;">
 							Confirmer et Payer
 						</button>
