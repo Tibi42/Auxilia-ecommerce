@@ -16,43 +16,45 @@
 			<div
 				style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto;">
 				<!-- Formulaire de contact -->
-				<div>
+				<div style="display: flex; flex-direction: column;">
 					<h2 style="font-size: 2rem; color: var(--color-primary); margin-bottom: 2rem;">Envoyez-nous un message</h2>
 
-					{{ form_start(contactForm, {'attr': {'class': 'contact-form'}}) }}
-					{{ form_errors(contactForm) }}
+					<div class="contact-form-container" style="background-color: var(--color-light); padding: 2rem; border-radius: 8px; flex-grow: 1; display: flex; flex-direction: column;">
+						{{ form_start(contactForm, {'attr': {'class': 'contact-form', 'style': 'flex-grow: 1; display: flex; flex-direction: column;'}}) }}
+						{{ form_errors(contactForm) }}
 
-					<div class="form-group">
-						{{ form_label(contactForm.name) }}
-						{{ form_widget(contactForm.name) }}
-						{{ form_errors(contactForm.name) }}
-					</div>
+						<div class="form-group">
+							{{ form_label(contactForm.name) }}
+							{{ form_widget(contactForm.name) }}
+							{{ form_errors(contactForm.name) }}
+						</div>
 
-					<div class="form-group">
-						{{ form_label(contactForm.email) }}
-						{{ form_widget(contactForm.email) }}
-						{{ form_errors(contactForm.email) }}
-					</div>
+						<div class="form-group">
+							{{ form_label(contactForm.email) }}
+							{{ form_widget(contactForm.email) }}
+							{{ form_errors(contactForm.email) }}
+						</div>
 
-					<div class="form-group">
-						{{ form_label(contactForm.subject) }}
-						{{ form_widget(contactForm.subject) }}
-						{{ form_errors(contactForm.subject) }}
-					</div>
+						<div class="form-group">
+							{{ form_label(contactForm.subject) }}
+							{{ form_widget(contactForm.subject) }}
+							{{ form_errors(contactForm.subject) }}
+						</div>
 
-					<div class="form-group">
-						{{ form_label(contactForm.message) }}
-						{{ form_widget(contactForm.message) }}
-						{{ form_errors(contactForm.message) }}
-					</div>
+						<div class="form-group" style="flex-grow: 1; display: flex; flex-direction: column;">
+							{{ form_label(contactForm.message) }}
+							{{ form_widget(contactForm.message, {'attr': {'style': 'flex-grow: 1; min-height: 150px;'}}) }}
+							{{ form_errors(contactForm.message) }}
+						</div>
 
-					<div class="form-actions">
-						<button type="submit" class="btn btn-primary btn-large btn-full">
-							<span class="btn-text">Envoyer le message</span>
-							<span class="btn-icon">→</span>
-						</button>
+						<div class="form-actions" style="margin-top: 2rem;">
+							<button type="submit" class="btn btn-primary btn-large btn-full">
+								<span class="btn-text">Envoyer le message</span>
+								<span class="btn-icon">→</span>
+							</button>
+						</div>
+						{{ form_end(contactForm) }}
 					</div>
-					{{ form_end(contactForm) }}
 				</div>
 
 				<!-- Informations de contact -->
