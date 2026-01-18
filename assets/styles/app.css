@@ -1894,3 +1894,9 @@ input[type="radio"] {
     text-overflow: ellipsis;
     max-width: 250px;
 }
+
+/* Centered Product Grid for Homepage */
+.products-grid-centered {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+    justify-content: center;
+}

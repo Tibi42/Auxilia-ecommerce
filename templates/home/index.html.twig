@@ -72,7 +72,7 @@
 	<section class="featured-products">
 		<div class="container">
 			<h2>Nos produits en vedette</h2>
-			<div class="products-grid">
+			<div class="products-grid products-grid-centered">
 				{% for product in featuredProducts %}
 					{% include 'components/product_card.html.twig' with {product: product} %}
 				{% else %}
