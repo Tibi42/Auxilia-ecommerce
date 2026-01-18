@@ -55,13 +55,13 @@
 				<div class="partners-track">
 					{% for partner in partners %}
 						<div class="partner-item">
-							<img src="{{ partner.logo }}" alt="{{ partner.name }}" title="{{ partner.name }}">
+							<img src="{{ partner.logo }}" alt="{{ partner.name }}" title="{{ partner.name }}" loading="lazy">
 						</div>
 					{% endfor %}
 					{# Double for infinite scroll effect if needed, but for now simple grid/flex #}
 					{% for partner in partners %}
 						<div class="partner-item">
-							<img src="{{ partner.logo }}" alt="{{ partner.name }}" title="{{ partner.name }}">
+							<img src="{{ partner.logo }}" alt="{{ partner.name }}" title="{{ partner.name }}" loading="lazy">
 						</div>
 					{% endfor %}
 				</div>
@@ -104,7 +104,7 @@
 								<p>"{{ testimonial.content }}"</p>
 							</div>
 							<div class="testimonial-author">
-								<img src="{{ testimonial.avatar }}" alt="{{ testimonial.author }}" class="author-avatar">
+								<img src="{{ testimonial.avatar }}" alt="{{ testimonial.author }}" class="author-avatar" loading="lazy">
 								<div class="author-info">
 									<span class="author-name">{{ testimonial.author }}</span>
 									<span class="testimonial-date">{{ testimonial.date }}</span>
