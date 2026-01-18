@@ -118,5 +118,17 @@ class ProductRepository extends ServiceEntityRepository
     //            ->getQuery()
     //            ->getOneOrNullResult()
     //        ;
-    //    }
+    public function findFeatured(?int $limit = null): array
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->andWhere('p.isFeatured = :featured')
+            ->setParameter('featured', true)
+            ->orderBy('p.id', 'DESC');
+
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

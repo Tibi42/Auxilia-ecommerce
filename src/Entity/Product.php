@@ -56,6 +56,12 @@ class Product
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageName = null;
 
+    /**
+     * Indique si le produit est mis en vedette
+     */
+    #[ORM\Column(options: ["default" => false])]
+    private ?bool $isFeatured = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -129,6 +135,18 @@ class Product
     public function setImageName(?string $imageName): static
     {
         $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function isFeatured(): ?bool
+    {
+        return $this->isFeatured;
+    }
+
+    public function setIsFeatured(bool $isFeatured): static
+    {
+        $this->isFeatured = $isFeatured;
 
         return $this;
     }
