@@ -21,10 +21,7 @@ final class HomeController extends AbstractController
         // Récupère tous les produits mis en vedette pour la section "Produits à la une"
         $featuredProducts = $productRepository->findFeatured();
 
-        // Si aucun produit n'est mis en vedette, on prend les derniers
-        if (empty($featuredProducts)) {
-            $featuredProducts = $productRepository->findBy([], ['id' => 'DESC'], 5);
-        }
+
 
         // Liste de commentaires clients mockés pour la démonstration
         $testimonials = [
