@@ -15,8 +15,10 @@
 		<section class="contact-section" style="margin: 3rem 0;">
 			<div
 				style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto;">
-				<!-- Formulaire de contact -->
-				<div style="display: flex; flex-direction: column; gap: 3rem;">
+				<!-- Colonne de Gauche : Message + Commentaire -->
+				<div
+					style="display: flex; flex-direction: column; gap: 3rem;">
+					<!-- Formulaire de contact -->
 					<div style="display: flex; flex-direction: column; height: 100%;">
 						<h2 style="font-size: 1.75rem; color: var(--color-primary); margin-bottom: 1.5rem;">Envoyez-nous un message</h2>
 
@@ -86,8 +88,8 @@
 					</div>
 				</div>
 
-				<!-- Informations de contact -->
-				<div style="display: flex; flex-direction: column; gap: 2rem;">
+				<!-- Colonne de Droite : Coordonnées + Aide -->
+				<div style="display: flex; flex-direction: column; gap: 3rem;" data-controller="chat">
 					<div style="display: flex; flex-direction: column;">
 						<h2 style="font-size: 1.75rem; color: var(--color-primary); margin-bottom: 1.5rem;">Nos coordonnées</h2>
 
@@ -145,9 +147,26 @@
 							<p style="margin-bottom: 2rem; opacity: 0.9; line-height: 1.6;">
 								Notre équipe d'experts est disponible pour répondre à toutes vos questions techniques ou commerciales.
 							</p>
-							<a href="{{ path('app_product') }}" class="btn" style="background-color: white; color: var(--color-primary); font-weight: 600; width: 100%; display: block; text-align: center; padding: 1rem; border-radius: 8px; text-decoration: none;">
-								Découvrir nos produits
-							</a>
+							<button data-action="click->chat#open" class="btn" style="background-color: white; color: var(--color-primary); font-weight: 600; width: 100%; display: block; text-align: center; padding: 1rem; border-radius: 8px; border: none; cursor: pointer;">
+								Discuter avec nous
+							</button>
+						</div>
+
+						<!-- Fenêtre de Chat Simulé -->
+						<div class="chat-window" data-chat-target="window">
+							<div class="chat-header">
+								<h3>Assistance Auxilia</h3>
+								<button class="chat-close" data-action="click->chat#close">&times;</button>
+							</div>
+							<div
+								class="chat-messages" data-chat-target="messages"><!-- Les messages apparaîtront ici -->
+							</div>
+							<div class="chat-footer">
+								<form class="chat-form" data-action="submit->chat#send">
+									<input type="text" class="chat-input" placeholder="Votre message..." data-chat-target="input">
+									<button type="submit" class="chat-send">Envoyer</button>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
