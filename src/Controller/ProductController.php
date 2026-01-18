@@ -81,4 +81,40 @@ final class ProductController extends AbstractController
             'q' => $q
         ]);
     }
+
+    /**
+     * Endpoint API pour la recherche en direct
+     * 
+     * @param ProductRepository $productRepository
+     * @param Request $request
+     * @return Response Retourne une liste de produits au format JSON
+     */
+    #[Route('/api/search', name: 'api_product_search', methods: ['GET'])]
+    public function search(ProductRepository $productRepository, Request $request): Response
+    {
+        $q = $request->query->get('q');
+        if (!$q || strlen($q) < 2) {
+            return $this->json([]);
+        }
+
+        $products = $productRepository->createQueryBuilder('p')
+            ->andWhere('p.name LIKE :q OR p.description LIKE :q')
+            ->setParameter('q', '%' . $q . '%')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+
+        $data = [];
+        foreach ($products as $product) {
+            $data[] = [
+                'id' => $product->getId(),
+                'name' => $product->getName(),
+                'price' => $product->getPrice() . ' €',
+                'description' => mb_strimwidth($product->getDescription() ?? '', 0, 50, '...'),
+                'image' => $product->getImageName() ? '/uploads/products/' . $product->getImageName() : null,
+            ];
+        }
+
+        return $this->json($data);
+    }
 }
