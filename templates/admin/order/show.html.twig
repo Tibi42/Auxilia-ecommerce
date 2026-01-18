@@ -56,10 +56,24 @@
                                 'shipped': {'label': 'Expédiée', 'style': 'background-color: #f3e8ff; color: #6b21a8;'}
                             } %}
 							{% set info = status_info[order.status|lower] ?? {'label': order.status, 'style': 'background-color: #f1f5f9; color: #475569;'} %}
-							<span style="padding: 0.4rem 1rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600; {{ info.style }} display: inline-flex; align-items: center; gap: 0.5rem;">
+						{% set info = status_info[order.status|lower] ?? {'label': order.status, 'style': 'background-color: #f1f5f9; color: #475569;'} %}
+							<span style="padding: 0.4rem 1rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600; {{ info.style }} display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
 								<i class="fas fa-circle" style="font-size: 0.5rem; opacity: 0.7;"></i>
 								{{ info.label }}
 							</span>
+
+							<form action="{{ path('app_admin_order_status_update', {'id': order.id}) }}" method="post" style="display: flex; gap: 0.5rem; align-items: center;">
+                                <select name="status" style="padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem; background: #f8fafc; color: #334155;">
+                                    {% for status_key, status_data in status_info %}
+                                        <option value="{{ status_key }}" {% if order.status|lower == status_key %}selected{% endif %}>
+                                            {{ status_data.label }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="btn btn-small" style="background-color: var(--color-primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">
+                                    Mettre à jour
+                                </button>
+                            </form>
 						</div>
 					</div>
 				</div>
