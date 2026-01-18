@@ -51,6 +51,10 @@
 								{{ form_label(form.description) }}
 								{{ form_widget(form.description, {'attr': {'style': 'border-radius: 12px; border: 2px solid #edf2f7; padding: 1rem; width: 100%; transition: all 0.3s; font-size: 1rem; min-height: 150px;'}}) }}
 							</div>
+							<div class="custom-form-row" style="flex-direction: row; align-items: center; gap: 0.75rem;">
+								{{ form_widget(form.isFeatured, {'attr': {'style': 'width: 20px; height: 20px; margin: 0;'}}) }}
+								{{ form_label(form.isFeatured, null, {'label_attr': {'style': 'margin-bottom: 0; cursor: pointer;'}}) }}
+							</div>
 						</div>
 					</section>
 
@@ -83,20 +87,20 @@
 							Image du produit
 						</h3>
 
-					<div id="image-preview-container" class="drag-drop-zone" style="margin-bottom: 2rem; position: relative; aspect-ratio: 1; border-radius: 16px; overflow: hidden; border: 2px dashed #cbd5e0; display: flex; align-items: center; justify-content: center; background: white; cursor: pointer; transition: all 0.3s ease;">
-						<div id="image-placeholder" style="text-align: center; color: #a0aec0; pointer-events: none;">
-							<i class="fas fa-cloud-upload-alt" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-							<p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Glissez-déposez une image ici</p>
-							<p style="font-size: 0.75rem; opacity: 0.7;">ou cliquez pour parcourir</p>
+						<div id="image-preview-container" class="drag-drop-zone" style="margin-bottom: 2rem; position: relative; aspect-ratio: 1; border-radius: 16px; overflow: hidden; border: 2px dashed #cbd5e0; display: flex; align-items: center; justify-content: center; background: white; cursor: pointer; transition: all 0.3s ease;">
+							<div id="image-placeholder" style="text-align: center; color: #a0aec0; pointer-events: none;">
+								<i class="fas fa-cloud-upload-alt" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+								<p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Glissez-déposez une image ici</p>
+								<p style="font-size: 0.75rem; opacity: 0.7;">ou cliquez pour parcourir</p>
+							</div>
+							<img id="image-preview" src="" alt="Aperçu" style="display: none; width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
 						</div>
-						<img id="image-preview" src="" alt="Aperçu" style="display: none; width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
-					</div>
 
-					<div class="upload-control">
-						{{ form_label(form.image, 'Choisir une image', {'label_attr': {'style': 'font-weight: 600; color: var(--color-dark); margin-bottom: 0.5rem; display: block;'}}) }}
-						<div class="file-input-wrapper">
-							{{ form_widget(form.image, {'attr': {'class': 'custom-file-input', 'id': 'product-image-input', 'accept': 'image/jpeg,image/png,image/webp'}}) }}
-						</div>
+						<div class="upload-control">
+							{{ form_label(form.image, 'Choisir une image', {'label_attr': {'style': 'font-weight: 600; color: var(--color-dark); margin-bottom: 0.5rem; display: block;'}}) }}
+							<div class="file-input-wrapper">
+								{{ form_widget(form.image, {'attr': {'class': 'custom-file-input', 'id': 'product-image-input', 'accept': 'image/jpeg,image/png,image/webp'}}) }}
+							</div>
 							<p style="font-size: 0.8rem; color: #718096; margin-top: 0.5rem;">
 								Format recommandé : 1000x1000px, PNG ou JPG.
 							</p>
@@ -120,7 +124,7 @@
 			display: flex;
 			flex-direction: column;
 		}
-		
+
 		.custom-form-row label {
 			display: block;
 			font-weight: 600;
@@ -170,134 +174,135 @@
 	</style>
 
 	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			// Trouver le champ input file (par ID ou par type)
-			const imageInput = document.getElementById('product-image-input') || 
-			                   document.querySelector('input[type="file"][name*="image"]');
-			const imagePreview = document.getElementById('image-preview');
-			const imagePlaceholder = document.getElementById('image-placeholder');
-			const imageContainer = document.getElementById('image-preview-container');
+		document.addEventListener('DOMContentLoaded', function () { // Trouver le champ input file (par ID ou par type)
+const imageInput = document.getElementById('product-image-input') || document.querySelector('input[type="file"][name*="image"]');
+const imagePreview = document.getElementById('image-preview');
+const imagePlaceholder = document.getElementById('image-placeholder');
+const imageContainer = document.getElementById('image-preview-container');
 
-			// Fonction pour traiter un fichier image
-			function handleImageFile(file) {
-				if (!file) return false;
+// Fonction pour traiter un fichier image
+function handleImageFile(file) {
+if (! file) 
+return false;
 
-				// Vérifier que c'est une image
-				const validImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
-				if (!validImageTypes.includes(file.type) && !file.type.startsWith('image/')) {
-					alert('Veuillez sélectionner un fichier image valide (JPG, PNG, WEBP).');
-					return false;
-				}
 
-				// Mettre à jour le champ input file avec DataTransfer
-				// DataTransfer est supporté dans tous les navigateurs modernes
-				try {
-					const dataTransfer = new DataTransfer();
-					dataTransfer.items.add(file);
-					imageInput.files = dataTransfer.files;
-					
-					// Déclencher l'événement change pour s'assurer que le formulaire détecte le changement
-					const changeEvent = new Event('change', { bubbles: true });
-					imageInput.dispatchEvent(changeEvent);
-				} catch (e) {
-					console.warn('DataTransfer non supporté, le fichier sera prévisualisé mais devra être sélectionné via le bouton Parcourir');
-				}
+// Vérifier que c'est une image
+const validImageTypes = [
+'image/jpeg',
+'image/jpg',
+'image/png',
+'image/webp',
+'image/gif'
+];
+if (! validImageTypes.includes(file.type) && ! file.type.startsWith('image/')) {
+alert('Veuillez sélectionner un fichier image valide (JPG, PNG, WEBP).');
+return false;
+}
 
-				// Créer un FileReader pour lire le fichier
-				const reader = new FileReader();
-				
-				reader.onload = function(e) {
-					// Afficher l'image prévisualisée
-					imagePreview.src = e.target.result;
-					imagePreview.style.display = 'block';
-					if (imagePlaceholder) {
-						imagePlaceholder.style.display = 'none';
-					}
-					imageContainer.style.border = '2px solid var(--color-primary)';
-					imageContainer.classList.remove('drag-over');
-				};
-				
-				reader.onerror = function() {
-					alert('Erreur lors de la lecture du fichier.');
-					imageInput.value = '';
-				};
-				
-				reader.readAsDataURL(file);
-				return true;
-			}
+// Mettre à jour le champ input file avec DataTransfer
+// DataTransfer est supporté dans tous les navigateurs modernes
+try {
+const dataTransfer = new DataTransfer();
+dataTransfer.items.add(file);
+imageInput.files = dataTransfer.files;
 
-			if (imageInput && imagePreview && imageContainer) {
-				// Gestion du changement de fichier via input
-				imageInput.addEventListener('change', function(e) {
-					const file = e.target.files[0];
-					if (file) {
-						handleImageFile(file);
-					} else {
-						// Si aucun fichier n'est sélectionné, réinitialiser
-						imagePreview.style.display = 'none';
-						if (imagePlaceholder) {
-							imagePlaceholder.style.display = 'block';
-						}
-						imageContainer.style.border = '2px dashed #cbd5e0';
-					}
-				});
+// Déclencher l'événement change pour s'assurer que le formulaire détecte le changement
+const changeEvent = new Event('change', {bubbles: true});
+imageInput.dispatchEvent(changeEvent);
+} catch (e) {
+console.warn('DataTransfer non supporté, le fichier sera prévisualisé mais devra être sélectionné via le bouton Parcourir');
+}
 
-				// Gestion du drag and drop
-				['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-					imageContainer.addEventListener(eventName, preventDefaults, false);
-				});
+// Créer un FileReader pour lire le fichier
+const reader = new FileReader();
 
-				function preventDefaults(e) {
-					e.preventDefault();
-					e.stopPropagation();
-				}
+reader.onload = function (e) { // Afficher l'image prévisualisée
+imagePreview.src = e.target.result;
+imagePreview.style.display = 'block';
+if (imagePlaceholder) {
+imagePlaceholder.style.display = 'none';
+}
+imageContainer.style.border = '2px solid var(--color-primary)';
+imageContainer.classList.remove('drag-over');
+};
 
-				// Ajouter la classe drag-over quand on survole avec un fichier
-				['dragenter', 'dragover'].forEach(eventName => {
-					imageContainer.addEventListener(eventName, function() {
-						imageContainer.classList.add('drag-over');
-					}, false);
-				});
+reader.onerror = function () {
+alert('Erreur lors de la lecture du fichier.');
+imageInput.value = '';
+};
 
-				// Retirer la classe drag-over quand on quitte la zone
-				['dragleave', 'drop'].forEach(eventName => {
-					imageContainer.addEventListener(eventName, function() {
-						imageContainer.classList.remove('drag-over');
-					}, false);
-				});
+reader.readAsDataURL(file);
+return true;
+}
 
-				// Gérer le drop
-				imageContainer.addEventListener('drop', function(e) {
-					const dt = e.dataTransfer;
-					const files = dt.files;
-					
-					if (files && files.length > 0) {
-						handleImageFile(files[0]);
-					} else {
-						// Gérer les items si files n'est pas disponible
-						const items = dt.items;
-						if (items && items.length > 0) {
-							for (let i = 0; i < items.length; i++) {
-								if (items[i].kind === 'file') {
-									const file = items[i].getAsFile();
-									if (file) {
-										handleImageFile(file);
-										break;
-									}
-								}
-							}
-						}
-					}
-				}, false);
+if (imageInput && imagePreview && imageContainer) { // Gestion du changement de fichier via input
+imageInput.addEventListener('change', function (e) {
+const file = e.target.files[0];
+if (file) {
+handleImageFile(file);
+} else { // Si aucun fichier n'est sélectionné, réinitialiser
+imagePreview.style.display = 'none';
+if (imagePlaceholder) {
+imagePlaceholder.style.display = 'block';
+}
+imageContainer.style.border = '2px dashed #cbd5e0';
+}
+});
 
-				// Permettre de cliquer sur la zone pour ouvrir le sélecteur de fichier
-				imageContainer.addEventListener('click', function(e) {
-					// Ne pas déclencher si on clique sur l'image prévisualisée
-					if (e.target !== imagePreview) {
-						imageInput.click();
-					}
-				});
-			}
-		});
+// Gestion du drag and drop
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+imageContainer.addEventListener(eventName, preventDefaults, false);
+});
+
+function preventDefaults(e) {
+e.preventDefault();
+e.stopPropagation();
+}
+
+// Ajouter la classe drag-over quand on survole avec un fichier
+['dragenter', 'dragover'].forEach(eventName => {
+imageContainer.addEventListener(eventName, function () {
+imageContainer.classList.add('drag-over');
+}, false);
+});
+
+// Retirer la classe drag-over quand on quitte la zone
+['dragleave', 'drop'].forEach(eventName => {
+imageContainer.addEventListener(eventName, function () {
+imageContainer.classList.remove('drag-over');
+}, false);
+});
+
+// Gérer le drop
+imageContainer.addEventListener('drop', function (e) {
+const dt = e.dataTransfer;
+const files = dt.files;
+
+if (files && files.length > 0) {
+handleImageFile(files[0]);
+} else { // Gérer les items si files n'est pas disponible
+const items = dt.items;
+if (items && items.length > 0) {
+for (let i = 0; i < items.length; i++) {
+if (items[i].kind === 'file') {
+const file = items[i].getAsFile();
+if (file) {
+handleImageFile(file);
+break;
+}
+}
+}
+}
+}
+}, false);
+
+// Permettre de cliquer sur la zone pour ouvrir le sélecteur de fichier
+imageContainer.addEventListener('click', function (e) { // Ne pas déclencher si on clique sur l'image prévisualisée
+if (e.target !== imagePreview) {
+imageInput.click();
+}
+});
+}
+});
 	</script>
 {% endblock %}

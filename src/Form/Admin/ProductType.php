@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -78,6 +79,16 @@ class ProductType extends AbstractType
                         ],
                         mimeTypesMessage: 'Veuillez uploader une image valide (JPG, PNG, WEBP)'
                     )
+                ],
+            ])
+            ->add('isFeatured', CheckboxType::class, [
+                'label' => 'Mettre en vedette',
+                'required' => false,
+                'label_attr' => [
+                    'class' => 'form-check-label',
+                ],
+                'attr' => [
+                    'class' => 'form-check-input',
                 ],
             ])
         ;

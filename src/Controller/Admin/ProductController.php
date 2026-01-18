@@ -222,6 +222,26 @@ final class ProductController extends AbstractController
      * @param EntityManagerInterface $entityManager Le gestionnaire d'entités de Doctrine
      * @return Response Une redirection vers la liste des produits admin
      */
+    #[Route('/admin/product/{id}/toggle-featured', name: 'app_admin_product_toggle_featured', methods: ['POST'])]
+    public function toggleFeatured(Product $product, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $product->setIsFeatured(!$product->isFeatured());
+        $entityManager->flush();
+
+        if ($this->isAjax()) {
+            return $this->json(['isFeatured' => $product->isFeatured()]);
+        }
+
+        return $this->redirectToRoute('app_admin_products');
+    }
+
+    private function isAjax(): bool
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
+    }
+
     #[Route('/admin/product/{id}/delete', name: 'app_admin_product_delete', methods: ['POST'])]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {

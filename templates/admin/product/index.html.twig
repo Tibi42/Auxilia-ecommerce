@@ -17,10 +17,11 @@
 		<div style="background-color: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 2rem;">
 			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
 				<h2 style="font-size: 1.5rem; color: var(--color-primary); margin: 0;">Liste des produits ({{ products|length }})</h2>
-				
+
 				{# Formulaires de filtres #}
 				<div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-					<form method="get" action="{{ path('app_admin_products') }}" style="display: flex; gap: 0.5rem; align-items: center;">
+					<form
+						method="get" action="{{ path('app_admin_products') }}" style="display: flex; gap: 0.5rem; align-items: center;">
 						{# Conserver le filtre stock si actif #}
 						{% if selectedStockFilter %}
 							<input type="hidden" name="stock" value="{{ selectedStockFilter }}">
@@ -29,14 +30,15 @@
 						<select name="category" id="category" onchange="this.form.submit()" style="padding: 0.5rem 1rem; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 1rem; background-color: white; color: var(--color-text); cursor: pointer;">
 							<option value="">Toutes</option>
 							{% for category in categories %}
-								<option value="{{ category }}" {% if selectedCategory == category %}selected{% endif %}>
+								<option value="{{ category }}" {% if selectedCategory == category %} selected {% endif %}>
 									{{ category }}
 								</option>
 							{% endfor %}
 						</select>
 					</form>
-					
-					<form method="get" action="{{ path('app_admin_products') }}" style="display: flex; gap: 0.5rem; align-items: center;">
+
+					<form
+						method="get" action="{{ path('app_admin_products') }}" style="display: flex; gap: 0.5rem; align-items: center;">
 						{# Conserver le filtre catégorie si actif #}
 						{% if selectedCategory %}
 							<input type="hidden" name="category" value="{{ selectedCategory }}">
@@ -44,13 +46,13 @@
 						<label for="stock" style="font-weight: 500; color: var(--color-text);">Stock:</label>
 						<select name="stock" id="stock" onchange="this.form.submit()" style="padding: 0.5rem 1rem; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 1rem; background-color: white; color: var(--color-text); cursor: pointer;">
 							<option value="">Tous</option>
-							<option value="low" {% if selectedStockFilter == 'low' %}selected{% endif %}>Stock faible (&lt; 10)</option>
-							<option value="medium" {% if selectedStockFilter == 'medium' %}selected{% endif %}>Stock moyen (10-30)</option>
-							<option value="high" {% if selectedStockFilter == 'high' %}selected{% endif %}>Stock élevé (&gt; 30)</option>
-							<option value="out" {% if selectedStockFilter == 'out' %}selected{% endif %}>En rupture</option>
+							<option value="low" {% if selectedStockFilter == 'low' %} selected {% endif %}>Stock faible (&lt; 10)</option>
+							<option value="medium" {% if selectedStockFilter == 'medium' %} selected {% endif %}>Stock moyen (10-30)</option>
+							<option value="high" {% if selectedStockFilter == 'high' %} selected {% endif %}>Stock élevé (&gt; 30)</option>
+							<option value="out" {% if selectedStockFilter == 'out' %} selected {% endif %}>En rupture</option>
 						</select>
 					</form>
-					
+
 					{% if selectedCategory or selectedStockFilter %}
 						<a href="{{ path('app_admin_products') }}" style="padding: 0.5rem 1rem; background-color: #f0f0f0; color: var(--color-text); text-decoration: none; border-radius: 4px; font-size: 0.9rem;">Effacer tous</a>
 					{% endif %}
@@ -62,6 +64,7 @@
 					<table style="width: 100%; border-collapse: collapse;">
 						<thead>
 							<tr style="border-bottom: 2px solid #e0e0e0;">
+								<th style="padding: 1rem; text-align: left; color: var(--color-text);">Vedette</th>
 								<th style="padding: 1rem; text-align: left; color: var(--color-text);">Image</th>
 								<th style="padding: 1rem; text-align: left; color: var(--color-text);">ID</th>
 								<th style="padding: 1rem; text-align: left; color: var(--color-text);">Nom</th>
@@ -73,7 +76,14 @@
 						</thead>
 						<tbody>
 							{% for product in products %}
-								<tr style="border-bottom: 1px solid #e0e0e0;">
+								<tr style="border-bottom: 1px solid #e0e0e0;" data-controller="featured-toggle">
+									<td style="padding: 1rem; text-align: center;">
+										<form method="post" action="{{ path('app_admin_product_toggle_featured', {'id': product.id}) }}" style="margin: 0;" data-action="submit->featured-toggle#toggle">
+											<button type="submit" style="background: none; border: none; cursor: pointer; padding: 0; outline: none;">
+												<i class="fa{% if product.isFeatured %}s{% else %}r{% endif %} fa-star" style="color: {% if product.isFeatured %}#fbc02d{% else %}#ccc{% endif %}; font-size: 1.25rem;" title="{% if product.isFeatured %}Retirer des vedettes{% else %}Mettre en vedette{% endif %}"></i>
+											</button>
+										</form>
+									</td>
 									<td style="padding: 1rem;">
 										{% if product.imageName %}
 											<img src="{{ asset('uploads/products/' ~ product.imageName) }}" alt="{{ product.name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
@@ -95,13 +105,13 @@
 										€</td>
 									<td style="padding: 1rem;">
 										<span style="padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;
-												                                            {% if product.stock < 10 %}
-												                                                background-color: #fee2e2; color: #dc2626;
-												                                            {% elseif product.stock < 30 %}
-												                                                background-color: #fef3c7; color: #d97706;
-												                                            {% else %}
-												                                                background-color: #d1fae5; color: #059669;
-												                                            {% endif %}">
+																																				                                            {% if product.stock < 10 %}
+																																				                                                background-color: #fee2e2; color: #dc2626;
+																																				                                            {% elseif product.stock < 30 %}
+																																				                                                background-color: #fef3c7; color: #d97706;
+																																				                                            {% else %}
+																																				                                                background-color: #d1fae5; color: #059669;
+																																				                                            {% endif %}">
 											{{ product.stock ?? 'N/A' }}
 										</span>
 									</td>
